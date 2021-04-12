@@ -19,7 +19,7 @@ public class Sick extends Person {
         this.contagiousTime = contagiousTime;
         this.virus = virus;
     }
-//end of constrctor
+//----------end of constrctor-----------
 
     @Override
     public String toString() {
@@ -44,10 +44,15 @@ public class Sick extends Person {
     public void setVirus(IVirus virus) {
         this.virus = virus;
     }
+    public Person recover(){
+        return new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
+    }
+    public boolean tryToDie(){
+        return this.virus.tryToKill(this);
 
-
+    }
     @Override
     public double contagionProbability() {
-        return 1;
+        return 0;
     }
 }

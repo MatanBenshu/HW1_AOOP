@@ -21,7 +21,7 @@ public abstract class Person {
     public Person(Person person){
        this.age = person.getAge();
        this.setLocation(person.getLocation());
-       this.setSettlement(person.getSettlement();
+       this.setSettlement(person.getSettlement());
     }
     //---------------end of constrctor--------------------------------------
 

@@ -46,8 +46,8 @@ public class BritishVariant implements IVirus{
     @Override
     public boolean tryToKill(Sick s){
         double die= getDeathProbability(s.getAge());
-        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2);
-        if(getRand(0,1)<prob)
+        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2)));
+        if(RandomV.GetRand(0,1)<prob)
             return true;
         else
             return false;

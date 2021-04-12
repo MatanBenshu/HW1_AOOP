@@ -38,12 +38,11 @@ public class Point {
     public double distanceFrom(Point p2){
         return Math.sqrt(Math.pow(this.x- p2.getX(),2)+Math.pow(this.y- p2.getY(),2));
     }
-    @Override
-    public boolean equals(Object o) {
+
+    public boolean equals(Point o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Point point = (Point) o;
-        return getX() == point.getX() && getY() == point.getY();
+        if (o == null || this.getClass() != o.getClass()) return false;
+        return this.getX() == o.getX() && this.getY() == o.getY();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package location;
 
+import java.util.Objects;
+
 public class Size {
     private  int width;
     private int height;
@@ -14,11 +16,11 @@ public class Size {
     }
 
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public void setWidth(int width) {
@@ -27,6 +29,18 @@ public class Size {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+
+    public boolean equals(Size o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        return this.getWidth() == o.getWidth() && this.getHeight() == o.getHeight();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWidth(), getHeight());
     }
 
     @Override

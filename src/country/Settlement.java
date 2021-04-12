@@ -1,11 +1,13 @@
 package country;
 
+import com.sun.jdi.Value;
 import location.Location;
 import location.Point;
 import population.Person;
 import population.Sick;
 
 import java.time.Instant;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +73,20 @@ public class Settlement {
 
         return num_of_sick/sattel_size;
     }
-    public Point randomLocation(){
 
+    public Point randomLocation(){
+        Point random_p=null;
+        final Point  left_sattel_p = this.location.getPosition();
+        final  int width = this.location.getSize().getWidth();
+        final  int height= this.location.getSize().getHeight();
+        int B_x = left_sattel_p.getX()+width;
+        int A_y = left_sattel_p.getY()-height;
+        Point  A = new Point(left_sattel_p.getX(),A_y);//The point that is at zero height in front of the left point of the settlement in relation to the height.
+        Point  B = new Point(B_x,left_sattel_p.getY());//The rightmost point at the same height as the leftmost point
+        Point C = new Point(B_x,A_y);//
+
+
+        return random_p;
 
     }
     //----------end of public methods---------

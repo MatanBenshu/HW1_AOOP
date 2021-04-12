@@ -1,5 +1,6 @@
 package Virus;
 
+import com.company.RandomV;
 import population.Healthy;
 import population.Person;
 import population.Sick;
@@ -20,9 +21,7 @@ public class BritishVariant implements IVirus{
     }
 
 
-    private double getRand(double min, double max){
-        return ((Math.random() * (max - min)) + min);
-    }
+
 
     @Override
     public double contagionProbability(Person person){
@@ -35,7 +34,7 @@ public class BritishVariant implements IVirus{
          {
             double distance = p1.getLocation().distanceFrom(p2.getLocation());
             double prob = Math.min(1, 0.14 * Math.exp(2 - 0.25 * distance))*contagionProbability(p2);
-            if (getRand(0, 1) < prob)
+            if (RandomV.GetRand(0, 1) < prob)
                 return true;
             else
                 return false;

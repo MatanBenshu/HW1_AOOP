@@ -5,6 +5,8 @@ import country.Settlement;
 import location.Location;
 import location.Point;
 
+import java.util.Objects;
+
 public abstract class Person {
     private int age;
     private Point location;
@@ -57,6 +59,18 @@ public abstract class Person {
 
      return new Sick(this,12,iVirus);
 
+    }
+
+
+    public boolean equals(Person o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        return this.getAge() == o.getAge() && this.location.equals(o.getLocation()) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAge(), getLocation(), getSettlement());
     }
     // --------------end of public method--------------
 }

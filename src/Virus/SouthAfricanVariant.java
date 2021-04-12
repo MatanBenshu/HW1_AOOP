@@ -5,38 +5,32 @@ import population.Sick;
 import java.lang.Math;
 import java.time.Instant;
 
-public class ChineseVariant implements IVirus {
+public class SouthAfricanVariant implements IVirus{
     private final Person  person;
 
-    public ChineseVariant(Person person) {
+    public SouthAfricanVariant(Person person) {
         this.person = person;
-        }
-    private double getDeathProb(int age) {
-
-        if(age <=18)
-            return 0.1/100;
-        else if(18 < age && age<=55)
+    }
+    private double getDeathProbability(int age){
+        if(age<=18)
             return 5/100;
         else
-            return 10/100;
+            return 8/100;
     }
-    private double getContProb(int age) {
-
-        if(age <=18)
-            return 20/100;
-        else if(18 < age && age<=55)
-            return 50/100;
+    private double getContagionProbability(int age){
+        if(age<=18)
+            return 60/100;
         else
-            return 70/100;
+            return 50/100;
     }
+
     private double getRand(double min, double max){
         return ((Math.random() * (max - min)) + min);
     }
 
     @Override
-    public double contagionProbability(Person person) {
-        return person.contagionProbability()*getContProb(person.getAge());
-
+    public double contagionProbability(Person person){
+        return person.contagionProbability()*0.7;
     }
 
     @Override
@@ -57,14 +51,13 @@ public class ChineseVariant implements IVirus {
     }
 
     @Override
-    public boolean tryToKill(Sick s) {
-        double die= getDeathProb(s.getAge());
-        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2));
+    public boolean tryToKill(Sick s){
+        double die= getDeathProbability(s.getAge());
+        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2);
         if(getRand(0,1)<prob)
             return true;
         else
             return false;
     }
 }
-
 

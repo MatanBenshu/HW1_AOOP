@@ -2,7 +2,7 @@ package location;
 
 import java.util.Objects;
 public class Location {
-    private Point position;
+    private Point position;//
     private Size size;
 
     public Location(Point position,Size size) {

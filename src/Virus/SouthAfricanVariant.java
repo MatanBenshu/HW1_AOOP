@@ -31,15 +31,15 @@ public class SouthAfricanVariant implements IVirus{
 
     @Override
     public double contagionProbability(Person person){
-        return person.contagionProbability()*0.7;
+        return person.contagionProbability()*getContagionProbability(person.getAge());
     }
 
     @Override
     public boolean tryToContagion(Person p1, Person p2) {
-        if( p2 instanceof Healthy){
+        if( !(p2 instanceof Healthy)){
 
             double distance = p1.getLocation().distanceFrom(p2.getLocation());
-            double prob = Math.min(1, 0.14 * Math.exp(2 - 0.25 * distance));
+            double prob = Math.min(1, 0.14 * Math.exp(2 - 0.25 * distance))*contagionProbability(p2);
             if (getRand(0, 1) < prob)
                 return true;
             else

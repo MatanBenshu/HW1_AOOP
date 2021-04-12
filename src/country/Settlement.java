@@ -1,8 +1,11 @@
 package country;
 
 import location.Location;
+import location.Point;
 import population.Person;
+import population.Sick;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +58,23 @@ public class Settlement {
         return ramzorcolor;
     }
     //----------end of getters and setters---------
+    public RamzorColor  calculateRamzorGrade(){};
+
+    public double contagiousPercent(){
+        double num_of_sick = 0;
+        int sattel_size =this.people.size();
+        for (int i = 0; i <sattel_size; i++) {
+            if (this.people.get(i) instanceof Sick)
+                num_of_sick++;
+
+        }
+
+        return num_of_sick/sattel_size;
+    }
+    public Point randomLocation(){
+
+
+    }
     //----------end of public methods---------
 
 

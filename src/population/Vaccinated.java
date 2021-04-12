@@ -2,6 +2,9 @@ package population;
 
 import country.Settlement;
 import location.Point;
+import simulation.Simulation;
+
+import java.time.Instant;
 
 public class Vaccinated extends Person {
     private long vaccinationTime;
@@ -19,9 +22,11 @@ public class Vaccinated extends Person {
 
     @Override
     public double contagionProbability() {
-        //חישוב מקדם ההיסתברות מחושב ע''פ נוסחא שתלויה בזמן
 
-        return 0;
+        if(Simulation.Clock.now()<21){
+
+        }
+
     }
 }
 

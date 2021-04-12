@@ -8,8 +8,15 @@ public enum RamzorColor {
        this.value =V;
    }
 
-    public double getVcolor() {
+    public double getColorV() {
         return this.value;
+    }
+    public RamzorColor valueToColor(double value){
+       if (value <=GREEN.value)return GREEN;
+       else if (GREEN.value<value&& value <= YELLOW.value) return YELLOW;
+       else if (YELLOW.value<value&& value <= ORANGE.value) return ORANGE;
+       else return RED;
+
     }
 
 }

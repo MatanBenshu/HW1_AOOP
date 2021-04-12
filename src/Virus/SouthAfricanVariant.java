@@ -27,9 +27,6 @@ public class SouthAfricanVariant implements IVirus{
             return 50/100;
     }
 
-    private double getRand(double min, double max){
-        return ((Math.random() * (max - min)) + min);
-    }
 
     @Override
     public double contagionProbability(Person person){

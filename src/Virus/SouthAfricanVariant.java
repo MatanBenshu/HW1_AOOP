@@ -1,5 +1,6 @@
 package Virus;
 
+import population.Healthy;
 import population.Person;
 import population.Sick;
 import java.lang.Math;
@@ -35,19 +36,16 @@ public class SouthAfricanVariant implements IVirus{
 
     @Override
     public boolean tryToContagion(Person p1, Person p2) {
-        if( p2 instanceof Sick)
-        {
-            return false;
-            //////////////// or true??
-        }
-        else {
-            double distance = p1.getLocation().distance(p2.getLocation());
+        if( p2 instanceof Healthy){
+
+            double distance = p1.getLocation().distanceFrom(p2.getLocation());
             double prob = Math.min(1, 0.14 * Math.exp(2 - 0.25 * distance));
             if (getRand(0, 1) < prob)
                 return true;
             else
                 return false;
         }
+        return false;
     }
 
     @Override

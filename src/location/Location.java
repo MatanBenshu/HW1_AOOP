@@ -6,34 +6,25 @@ public class Location {
     private Size size;//width and height of location
 
     public Location(Point position,Size size) {
-        this.position = new Point(position);
-        this.size = new Size(size) ;
+        this.position = position;
+        this.size = size;
 
     }
-    public Location(Location obj) {
-        this.size = obj.getSize();
-        this.position = obj.getPosition();
-
-    }
+//    public Location(Location obj) {
+//        this.size = obj.getSize();
+//        this.position = obj.getPosition();
+//
+//    }
     /*getters*/
     public Point getPosition() {
-        Point dupli_pos = new Point(position);
-        return dupli_pos;
+
+        return this.position;
     }
     public Size getSize() {
-        Size dupli_size = new Size(this.size);
-        return dupli_size;
-    }
-    /*setters*/
-    public void setPosition(Point position) {
 
-        this.position = new Point(position);
+        return this.size;
     }
 
-    public void setSize(Size size) {
-
-        this.size = new Size(size);
-    }
 
 
     public boolean equals(Location o) {

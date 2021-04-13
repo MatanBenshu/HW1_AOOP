@@ -10,8 +10,9 @@ import java.time.Instant;
 
 public class ChineseVariant implements IVirus {
 
+    public ChineseVariant() {
 
-    public ChineseVariant() { }
+        }
     private double getDeathProb(int age) {
 
         if(age <=18)

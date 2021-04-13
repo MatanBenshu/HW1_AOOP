@@ -12,10 +12,7 @@ public class Convalescent extends Person{
         this.virus = iVirus;
     }
 
-    public Convalescent(Person person, IVirus iVirus) {
-        super(person);
-        this.virus = iVirus;
-    }
+
 
     @Override
     public double contagionProbability() {

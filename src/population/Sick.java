@@ -14,11 +14,7 @@ public class Sick extends Person {
         this.virus = virus;
     }
 
-    public Sick(Person person, long contagiousTime, IVirus virus) {
-        super(person);
-        this.contagiousTime = contagiousTime;
-        this.virus = virus;
-    }
+
 //----------end of constrctor-----------
 
     @Override
@@ -32,24 +28,13 @@ public class Sick extends Person {
     public long getContagiousTime() {
         return contagiousTime;
     }
-
-    public void setContagiousTime(long contagiousTime) {
-        this.contagiousTime = contagiousTime;
-    }
-
-    public IVirus getVirus() {
-        return virus;
-    }
-
-    public void setVirus(IVirus virus) {
-        this.virus = virus;
-    }
     public Person recover(){
-        return new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
+       Person update = new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
+        this.getSettlement().updatePerson(this,update);
+        return update;
     }
     public boolean tryToDie(){
         return this.virus.tryToKill(this);
-
     }
     @Override
     public double contagionProbability() {

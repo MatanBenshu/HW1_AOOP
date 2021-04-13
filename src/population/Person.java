@@ -4,6 +4,7 @@ import Virus.IVirus;
 import country.Settlement;
 import location.Location;
 import location.Point;
+import simulation.Simulation;
 
 import java.util.Objects;
 
@@ -15,14 +16,14 @@ public abstract class Person {
     //----------start of constructor---------
     public Person(int age, Point location, Settlement settlement) {
         this.age = age;
-        this.setLocation(location); ;
-        this.settlement=settlement;
+        this.location=location; ;
+        this.settlement =settlement;
     }
-    public Person(Person person){
-       this.age = person.getAge();
-       this.setLocation(person.getLocation());
-       this.settlement = person.getSettlement();
-    }
+//    public Person(Person person){
+//       this.age = person.getAge();
+//       this.setLocation(person.getLocation());
+//       this.setSettlement(person.getSettlement());
+//    }
     //---------------end of constrctor--------------------------------------
 
     //------------ start of public method----------
@@ -35,30 +36,24 @@ public abstract class Person {
     }
 
     public Point getLocation() {
-        return new Point(this.location);
+        return this.location;
     }
 
     public Settlement getSettlement() {
-        return settlement;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-    public void setLocation(Point location) {
-
-        this.location =new Point( location);
+        return this.settlement;
     }
 
-    public void setSettlement(Settlement settlement) {
-        this.settlement =settlement;
-    }
+
+    public void setSettlement(Settlement sat){this.settlement=settlement;}
+
 
     //------------end of getters and setters---------------------------
 
    public Person contagion(IVirus iVirus){
-        Person sick_p = new Sick(this,12,iVirus);
-        this.settlement.updatePerson(sick_p);
-     return sick_p;
+        Person p_S=new Sick(this.age,this.location,this.settlement,Simulation.Clock.now(),iVirus);
+        settlement.updatePerson(this,p_S);
+
+     return p_S;
 
     }
 

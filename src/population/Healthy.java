@@ -2,6 +2,7 @@ package population;
 
 import country.Settlement;
 import location.Point;
+import simulation.Simulation;
 
 public class Healthy extends Person{
 
@@ -11,14 +12,14 @@ public class Healthy extends Person{
 
     }
 
-    public Healthy(Person person) {
-        super(person);
-    }
+
     //end of constrctor/////////
 
     //public methods
     public Person vaccinate(){
-        return new Vaccinated(this,System.nanoTime());
+        Person update = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
+        this.getSettlement().updatePerson(this,update);
+        return update;
     }
     @Override
     public double contagionProbability() {

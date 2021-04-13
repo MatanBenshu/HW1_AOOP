@@ -6,8 +6,8 @@ import population.Person;
 import java.util.ArrayList;
 
 public class City extends Settlement{
-    public City(String name, Location location, ArrayList<Person> people) {
-        super(name, location, people);
+    public City(String name, Location location) {
+        super(name, location );
     }
 
     public RamzorColor calculateRamzorGrade(){

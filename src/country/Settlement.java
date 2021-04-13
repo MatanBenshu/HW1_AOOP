@@ -11,30 +11,24 @@ import java.awt.*;
 import java.time.Instant;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Settlement {
     private String name;
     private Location location;
-    private ArrayList<Person> people;
-
+    private ArrayList<Person> people = new ArrayList<Person>();
+    private Vector<Person> personVector= new Vector<Person>();
     private RamzorColor ramzorcolor;
+    private int a_size=0;
 
     //----------start of constructor---------
-    public Settlement(String name, Location location, ArrayList<Person> people) {
+    public Settlement(String name, Location location) {
         this.name = new String(name);
-        this.location = new Location(location);
-        this.people = Make_person_list(people);
+        this.location = location;
         this.ramzorcolor = RamzorColor.GREEN;
-
     }
 
-    public Settlement(Settlement settlement) {
-        this.name = new String(settlement.getName());
-        this.people = Make_person_list(settlement.getPeople());
-        this.location = new Location(settlement.getLocation());
-        this.ramzorcolor = settlement.getRamzorcolor();
-    }
-    //----------end of constructor---------
+//--------end of constructor---------
 
 
     //----------start of public methods---------
@@ -44,35 +38,18 @@ public class Settlement {
     }
 
     public Location getLocation() {
-        return new Location(this.location);
-    }
-    public Person getPerson(Person per){
-        return this.people.get(this.people.indexOf(per));
+        return location;
     }
 
-    public ArrayList<Person> getPeople() {
-        return Make_person_list(this.people);
-    }
 
     public void setName(String name) {
         this.name = new String(name);
-    }
-
-    public void setLocation(Location location) {
-        this.location = new Location(location);
-    }
-
-    public void setPeople(ArrayList<Person> people) {
-        this.people = Make_person_list(people);
     }
 
     public RamzorColor getRamzorcolor() {
         return ramzorcolor;
     }
 
-    public void setRamzorcolor(RamzorColor ramzorcolor) {
-        this.ramzorcolor = calculateRamzorGrade();
-    }
 
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
@@ -107,7 +84,11 @@ public class Settlement {
     }
 
     public boolean addPerson(Person person) {
-        this.people.add(person);
+
+            this.people.add(person);
+            this.a_size++;
+            int s=this.people.size();
+
         return true;
     }
 
@@ -120,26 +101,29 @@ public class Settlement {
 
         return true;
     }
-    public boolean updatePerson(Person person_obj){
-        if (this.people.contains(person_obj) == false)return false;
-        this.people.add(this.people.indexOf(person_obj),person_obj);
+    public   boolean updatePerson(Person ex_person_obj,Person up_person_obj){
+        if (this.people.contains(ex_person_obj) == false)
+            return false;
+        this.people.remove(ex_person_obj);
+        this.people.add(up_person_obj);
 
         return true;
 
     }
 
-    //----------end of public methods---------
+    @Override
+    public String toString() {
+        return "Settlement{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", people=" + people +
+                ", ramzorcolor=" + ramzorcolor +
+                '}';
+    }
+//----------end of public methods---------
 
 
     ////----------start of private methods------------------
-    private ArrayList<Person> Make_person_list(ArrayList<Person> per_arry) {
 
-            ArrayList<Person> new_arry_list = new ArrayList<Person>();
-            for (int i = 0; i < per_arry.size(); i++) {
-                new_arry_list.add(per_arry.get(i));
-            }
-            return new_arry_list;
-
-
-    }
+//    }
 }

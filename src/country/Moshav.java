@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Moshav extends Settlement{
 
-    public Moshav(String name, Location location, ArrayList<Person> people) {
-        super(name, location, people);
+    public Moshav(String name, Location location) {
+        super(name, location);
     }
 
    public RamzorColor calculateRamzorGrade(){

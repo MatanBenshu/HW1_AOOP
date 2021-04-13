@@ -16,12 +16,12 @@ public abstract class Person {
     public Person(int age, Point location, Settlement settlement) {
         this.age = age;
         this.setLocation(location); ;
-        this.setSettlement(settlement);
+        this.settlement=settlement;
     }
     public Person(Person person){
        this.age = person.getAge();
        this.setLocation(person.getLocation());
-       this.setSettlement(person.getSettlement());
+       this.settlement = person.getSettlement();
     }
     //---------------end of constrctor--------------------------------------
 
@@ -39,7 +39,7 @@ public abstract class Person {
     }
 
     public Settlement getSettlement() {
-        return new Settlement(settlement);
+        return settlement;
     }
     public void setAge(int age) {
         this.age = age;
@@ -50,14 +50,15 @@ public abstract class Person {
     }
 
     public void setSettlement(Settlement settlement) {
-        this.settlement =new Settlement( settlement);
+        this.settlement =settlement;
     }
 
     //------------end of getters and setters---------------------------
 
    public Person contagion(IVirus iVirus){
-
-     return new Sick(this,12,iVirus);
+        Person sick_p = new Sick(this,12,iVirus);
+        this.settlement.updatePerson(sick_p);
+     return sick_p;
 
     }
 

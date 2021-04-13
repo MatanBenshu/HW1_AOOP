@@ -7,15 +7,16 @@ import location.Point;
 import population.Person;
 import population.Sick;
 
+import java.awt.*;
 import java.time.Instant;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Settlement {
     private String name;
     private Location location;
     private ArrayList<Person> people;
+
     private RamzorColor ramzorcolor;
 
     //----------start of constructor---------
@@ -23,7 +24,7 @@ public class Settlement {
         this.name = new String(name);
         this.location = new Location(location);
         this.people = Make_person_list(people);
-        this.ramzorcolor = calculateRamzorGrade();
+        this.ramzorcolor = RamzorColor.GREEN;
 
     }
 
@@ -31,7 +32,7 @@ public class Settlement {
         this.name = new String(settlement.getName());
         this.people = Make_person_list(settlement.getPeople());
         this.location = new Location(settlement.getLocation());
-        this.ramzorcolor = settlement.calculateRamzorGrade();
+        this.ramzorcolor = settlement.getRamzorcolor();
     }
     //----------end of constructor---------
 
@@ -44,6 +45,9 @@ public class Settlement {
 
     public Location getLocation() {
         return new Location(this.location);
+    }
+    public Person getPerson(Person per){
+        return this.people.get(this.people.indexOf(per));
     }
 
     public ArrayList<Person> getPeople() {
@@ -77,7 +81,7 @@ public class Settlement {
 
     public double contagiousPercent() {
         double num_of_sick = 0;
-        int sattel_size = this.people.size();
+        double sattel_size =(double) this.people.size();
         for (int i = 0; i < sattel_size; i++) {
             if (this.people.get(i) instanceof Sick)
                 num_of_sick++;
@@ -116,18 +120,26 @@ public class Settlement {
 
         return true;
     }
+    public boolean updatePerson(Person person_obj){
+        if (this.people.contains(person_obj) == false)return false;
+        this.people.add(this.people.indexOf(person_obj),person_obj);
+
+        return true;
+
+    }
+
     //----------end of public methods---------
 
 
     ////----------start of private methods------------------
     private ArrayList<Person> Make_person_list(ArrayList<Person> per_arry) {
-        if (per_arry != null) {
+
             ArrayList<Person> new_arry_list = new ArrayList<Person>();
             for (int i = 0; i < per_arry.size(); i++) {
                 new_arry_list.add(per_arry.get(i));
             }
             return new_arry_list;
-        }
-    return null;
+
+
     }
 }

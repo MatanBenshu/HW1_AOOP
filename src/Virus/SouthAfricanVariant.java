@@ -9,11 +9,10 @@ import java.time.Instant;
 import java.time.temporal.ValueRange;
 
 public class SouthAfricanVariant implements IVirus{
-    private final Person  person;
 
-    public SouthAfricanVariant(Person person) {
-        this.person = person;
-    }
+
+    public SouthAfricanVariant() {}
+
     private double getDeathProbability(int age){
         if(age<=18)
             return 5/100;

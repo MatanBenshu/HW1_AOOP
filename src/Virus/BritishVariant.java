@@ -8,11 +8,10 @@ import java.lang.Math;
 import java.time.Instant;
 
 public class BritishVariant implements IVirus{
-    private final Person  person;
 
-    public BritishVariant(Person person) {
-        this.person = person;
-    }
+
+    public BritishVariant() {}
+
     private double getDeathProbability(int age){
         if(age<=18)
             return 1/100;

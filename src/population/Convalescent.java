@@ -11,6 +11,10 @@ public class Convalescent extends Person{
         super(age, location, settlement);
         this.virus = iVirus;
     }
+    @Override
+    public String toString(){ //overriding the toString() method
+        return " Convalescent Age : "+this.getAge() +"Location : "+this.getLocation().toString() + " Settelment :" +this.getSettlement().toString() ;
+    }
 
 
 

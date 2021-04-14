@@ -49,4 +49,8 @@ public class BritishVariant implements IVirus{
         else
             return false;
     }
+    @Override
+    public String toString(){ //overriding the toString() method
+        return " BritishVariant" ;
+    }
 }

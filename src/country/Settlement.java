@@ -101,7 +101,7 @@ public class Settlement {
 
         return true;
     }
-    public   boolean updatePerson(Person ex_person_obj,Person up_person_obj){
+    public  boolean updatePerson(Person ex_person_obj,Person up_person_obj){
         if (this.people.contains(ex_person_obj) == false)
             return false;
         this.people.remove(ex_person_obj);

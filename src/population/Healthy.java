@@ -25,5 +25,9 @@ public class Healthy extends Person{
     public double contagionProbability() {
         return 1;
     }
+    @Override
+    public String toString(){ //overriding the toString() method
+        return " Healthy Age : "+this.getAge() +"Location : "+this.getLocation().toString() + " Settelment :" +this.getSettlement().toString() ;
+    }
     ///end of public method
 }

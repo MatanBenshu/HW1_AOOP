@@ -25,5 +25,9 @@ public class Vaccinated extends Person {
         }
         return Math.max(0.05,1.05/(t-14));
     }
+    @Override
+    public String toString(){ //overriding the toString() method
+        return " Vaccinated Age : "+this.getAge() +"Location : "+this.getLocation().toString() + " Settelment :" +this.getSettlement().toString() ;
+    }
 }
 

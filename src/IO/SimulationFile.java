@@ -18,7 +18,7 @@ public class SimulationFile {
     public SimulationFile() throws Exception {
 
     }
-    public Settlement[] readFile(String path) throws Exception {
+    private Settlement[] readFile(String path) throws Exception {
 
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
@@ -43,21 +43,21 @@ public class SimulationFile {
 
     }
 
-    public void createHealthyArr(int size, Settlement settlement){
+    private void createHealthyArr(int size, Settlement settlement){
         for(int i=0;i<size;i++)
         {
             settlement.addPerson(createHPerson(settlement));
         }
     }
 
-    public Healthy createHPerson(Settlement settle){
+    private Healthy createHPerson(Settlement settle){
         int age= calcAge();
         Point loc=settle.getLocation().getPosition();
         Healthy h= new Healthy(age,loc,settle);
         return h;
     }
 
-    public int calcAge(){
+    private int calcAge(){
         double y= Math.random()*4;
         Random rand= new Random();
         double x;
@@ -67,7 +67,7 @@ public class SimulationFile {
         x=x*6+9;
         return (int)(5*x+y);
     }
-    public Settlement strToSettlement(String str){
+    private Settlement strToSettlement(String str){
         Settlement place = null;
         str=str.replaceAll(" ", "");
         String[] line = str.split(";");

@@ -1,9 +1,11 @@
 package com.company;
 
+import IO.SimulationFile;
 import Virus.ChineseVariant;
 import country.City;
 import country.RamzorColor;
 import country.Settlement;
+import country.map;
 import location.Location;
 import location.Point;
 import location.Size;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Size s=new Size(8,5);
         Point p=new Point(1,1);
         Point p2=new Point(2,3);
@@ -55,6 +57,10 @@ public class Main {
         ashdod.addPerson(new Healthy(22,p2,ashdod));
         System.out.println(ashdod.contagiousPercent());
         System.out.println(ashdod.calculateRamzorGrade());
+        SimulationFile X = new SimulationFile();
+        map y =X.loadMap();
+
+
 
 
     }

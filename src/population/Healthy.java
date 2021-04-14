@@ -13,13 +13,14 @@ public class Healthy extends Person{
     }
 
 
+
     //end of constrctor/////////
 
     //public methods
     public Person vaccinate(){
-        Person update = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
-        this.getSettlement().updatePerson(this,update);
-        return update;
+        Person vac_P = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
+        this.getSettlement().updatePerson(this,vac_P);
+        return vac_P;
     }
     @Override
     public double contagionProbability() {

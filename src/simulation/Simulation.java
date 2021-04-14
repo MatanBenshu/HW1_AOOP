@@ -7,6 +7,7 @@ public  class Simulation {
         public static long now() {
             return time;
         }
+
         public static void nextTick(){
             time++;
         }

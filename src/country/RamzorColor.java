@@ -9,7 +9,6 @@ public enum RamzorColor {
         this.value = V;
         this.color = color;
     }
-
     public double getColorV() {
         return this.value;
     }

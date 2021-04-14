@@ -5,6 +5,7 @@ import country.Settlement;
 import location.Point;
 
 public class Convalescent extends Person{
+
     private IVirus virus;
 
     public Convalescent(int age, Point location, Settlement settlement, IVirus iVirus) {

@@ -1,14 +1,11 @@
 package Virus;
 
-import com.company.RandomV;
-import population.Healthy;
+import simulation.RandomV;
 import population.Person;
 import population.Sick;
 import java.lang.Math;
-import java.time.Instant;
 
 public class BritishVariant implements IVirus{
-
 
     public BritishVariant() {}
 

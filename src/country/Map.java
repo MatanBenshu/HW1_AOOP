@@ -1,9 +1,9 @@
 package country;
 
-public class map {
+public class Map {
     private Settlement[] settlements;
 
-    public map(Settlement[] settlements) {
+    public Map(Settlement[] settlements) {
         this.settlements = settlements;
     }
 

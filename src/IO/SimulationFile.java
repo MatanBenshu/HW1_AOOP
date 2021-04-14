@@ -12,9 +12,9 @@ import population.Person;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
-import country.map;
+import country.Map;
 public class SimulationFile {
-    private static final String file = "C:\\Users\\Niran Dishi\\IdeaProjects\\TEXTCHECK\\src\\com\\company\\input.txt";
+    private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";
     public SimulationFile() throws Exception {
 
     }
@@ -29,8 +29,8 @@ public class SimulationFile {
         int j=0; //to iterate on settlements
 
         String s1 = br.readLine();
-        while (s1 != null) {
-            settlements.add(strToSettlement(s1));;//by ref?
+        while (s1.length() != 0) {
+            settlements.add(strToSettlement(s1));//by ref?
             j++;
             s1 = br.readLine();
         }
@@ -69,36 +69,46 @@ public class SimulationFile {
     }
     private Settlement strToSettlement(String str){
         Settlement place = null;
+
+        int num_of_crit=7;
         str=str.replaceAll(" ", "");
         String[] line = str.split(";");
+        int len=line.length;
+        if(line.length>0 && line.length== num_of_crit) {
+            String setName = line[1];
+            Point p = new Point(Integer.parseInt(line[2]), Integer.parseInt(line[3]));
+            Size s = new Size(Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+            ArrayList<Person> per = null;
 
-        String setName=line[1];
-        Point p=new Point(Integer.parseInt(line[2]),Integer.parseInt(line[3]));
-        Size s= new Size(Integer.parseInt(line[4]),Integer.parseInt(line[5]));
-        ArrayList<Person> per=null;
+            switch (line[0]) {
+                case "City":
+                    place = new City(setName, new Location(p, s));
+                    break;
+                case "Kibbutz":
+                    place = new Kibbutz(setName, new Location(p, s));
+                    break;
+                case "Moshav":
+                    place = new Moshav(setName, new Location(p, s));
+                    break;
+                default:
+                    System.out.print("No such settlement! ");
+                    System.exit(0);
 
-        switch (line[0]) {
-            case "City":
-                place = new City(setName, new Location(p, s));
-                break;
-            case "Kibbutz":
-                place = new Kibbutz(setName, new Location(p, s));
-                break;
-            case "Moshav":
-                place = new Moshav(setName, new Location(p, s));
-                break;
-            default:
-                System.out.print("No such settlement! ");
-                System.exit(0);
+            }
 
+            createHealthyArr(Integer.parseInt(line[line.length - 1]), place);
+            return place;
+        }
+        else {
+            System.out.print("Error ,the file doesnt match! ");
+            System.exit(0);
+            return place;
         }
 
-        createHealthyArr(Integer.parseInt(line[line.length-1]),place);
-        return place;
     }
 
-    public map loadMap() throws Exception {
-        map mp = new map(readFile(file));
+    public Map loadMap() throws Exception {
+        Map mp = new Map(readFile(file));
         return mp;
     }
 

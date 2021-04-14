@@ -2,19 +2,16 @@ package location;
 import java.util.Objects;
 
 public class Point {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     /*constructor*/
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    /*copy constructor*/
-//    public Point(Point obj){
-//        this.x = obj.getX();
-//        this.y = obj.getY();
-//    }
+
+
     //------------ start of public method----------///
 
     //------------ start of getters and setters----------
@@ -26,13 +23,7 @@ public class Point {
         return y;
     }
 
-//    public void setX(int x) {
-//        this.x = x;
-//    }
-//
-//    public void setY(int y) {
-//        this.y = y;
-//    }
+
     //------------ end of getters and setters----------
 
     public double distanceFrom(Point p2){

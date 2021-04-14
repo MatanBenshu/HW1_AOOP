@@ -7,6 +7,7 @@ import location.Point;
 public class Sick extends Person {
  private long contagiousTime;
  private IVirus virus;
+
 //    constructors
     public Sick(int age, Point location, Settlement settlement, long contagiousTime, IVirus virus) {
         super(age, location, settlement);
@@ -29,9 +30,9 @@ public class Sick extends Person {
         return contagiousTime;
     }
     public Person recover(){
-       Person update = new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
-        this.getSettlement().updatePerson(this,update);
-        return update;
+        Person r_p = new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
+        this.getSettlement().updatePerson(this,r_p);
+        return r_p;
     }
     public boolean tryToDie(){
         return this.virus.tryToKill(this);
@@ -40,4 +41,5 @@ public class Sick extends Person {
     public double contagionProbability() {
         return 0;
     }
+
 }

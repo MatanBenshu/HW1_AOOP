@@ -19,18 +19,12 @@ public abstract class Person {
         this.location=location; ;
         this.settlement =settlement;
     }
-//    public Person(Person person){
-//       this.age = person.getAge();
-//       this.setLocation(person.getLocation());
-//       this.setSettlement(person.getSettlement());
-//    }
+
     //---------------end of constrctor--------------------------------------
 
     //------------ start of public method----------
 
     //--------------start of getters and setters-------------
-    public abstract double contagionProbability();
-
     public int getAge() {
         return this.age;
     }
@@ -46,8 +40,9 @@ public abstract class Person {
 
     public void setSettlement(Settlement sat){this.settlement=settlement;}
 
-
     //------------end of getters and setters---------------------------
+
+    public abstract double contagionProbability();
 
    public Person contagion(IVirus iVirus){
         Person p_S=new Sick(this.age,this.location,this.settlement,Simulation.Clock.now(),iVirus);
@@ -58,10 +53,10 @@ public abstract class Person {
     }
 
 
-    public boolean equals(Person o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        return this.getAge() == o.getAge() && this.location.equals(o.getLocation()) ;
+    public boolean equals(Person p) {
+        if (this == p) return true;
+        if (p == null || this.getClass() != p.getClass()) return false;
+        return this.getAge() == p.getAge() && this.location.equals(p.getLocation());
     }
 
     @Override

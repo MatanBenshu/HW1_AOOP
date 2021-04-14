@@ -4,7 +4,7 @@ import country.Settlement;
 import location.Point;
 import simulation.Simulation;
 
-import java.time.Instant;
+
 
 public class Vaccinated extends Person {
     private long vaccinationTime;
@@ -14,8 +14,6 @@ public class Vaccinated extends Person {
         this.vaccinationTime = vaccinationTime;
 
     }
-
-
 
     @Override
     public double contagionProbability() {

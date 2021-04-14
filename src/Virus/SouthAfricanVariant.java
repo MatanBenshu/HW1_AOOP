@@ -1,12 +1,9 @@
 package Virus;
 
-import com.company.RandomV;
-import population.Healthy;
+import simulation.RandomV;
 import population.Person;
 import population.Sick;
 import java.lang.Math;
-import java.time.Instant;
-import java.time.temporal.ValueRange;
 
 public class SouthAfricanVariant implements IVirus{
 
@@ -45,6 +42,7 @@ public class SouthAfricanVariant implements IVirus{
         }
         return false;
     }
+
 
     @Override
     public boolean tryToKill(Sick s){

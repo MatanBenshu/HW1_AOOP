@@ -1,25 +1,19 @@
 package country;
 
-import com.company.RandomV;
-import com.sun.jdi.Value;
+import simulation.RandomV;
 import location.Location;
 import location.Point;
 import population.Person;
 import population.Sick;
 
-import java.awt.*;
-import java.time.Instant;
-import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Settlement {
     private String name;
     private Location location;
     private ArrayList<Person> people = new ArrayList<Person>();
-    private Vector<Person> personVector= new Vector<Person>();
     private RamzorColor ramzorcolor;
-    private int a_size=0;
+
 
     //----------start of constructor---------
     public Settlement(String name, Location location) {
@@ -41,15 +35,9 @@ public class Settlement {
         return location;
     }
 
-
-    public void setName(String name) {
-        this.name = new String(name);
-    }
-
-    public RamzorColor getRamzorcolor() {
+    protected RamzorColor getRamzorcolor() {
         return ramzorcolor;
     }
-
 
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
@@ -85,15 +73,17 @@ public class Settlement {
 
     public boolean addPerson(Person person) {
 
-            this.people.add(person);
-            this.a_size++;
-            int s=this.people.size();
+            if(this.people.contains(person)==false)
+                this.people.add(person);
 
         return true;
     }
 
     public boolean transferPerson(Person person, Settlement new_sattle) {
         //start change settlement persons
+        if(this.people.contains(person)==false)
+            return false;
+
         new_sattle.addPerson(person);
         this.people.remove(person);
         ////start change person settlement
@@ -102,6 +92,7 @@ public class Settlement {
         return true;
     }
     public  boolean updatePerson(Person ex_person_obj,Person up_person_obj){
+
         if (this.people.contains(ex_person_obj) == false)
             return false;
         this.people.remove(ex_person_obj);

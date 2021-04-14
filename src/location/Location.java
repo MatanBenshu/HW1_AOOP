@@ -2,19 +2,15 @@ package location;
 
 import java.util.Objects;
 public class Location {
-    private Point position;//top left point Location coordinates
-    private Size size;//width and height of location
+    private final Point position;//top left point Location coordinates
+    private final Size size;//width and height of location
 
     public Location(Point position,Size size) {
         this.position = position;
         this.size = size;
 
     }
-//    public Location(Location obj) {
-//        this.size = obj.getSize();
-//        this.position = obj.getPosition();
-//
-//    }
+
     /*getters*/
     public Point getPosition() {
 
@@ -38,10 +34,7 @@ public class Location {
         return Objects.hash(getPosition(), getSize());
     }
 
-    private double Area_size(){
-       double s_location =  this.size.getHeight()* this.size.getWidth();
-        return s_location;
-    }
+
 
 }
 

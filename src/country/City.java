@@ -11,7 +11,6 @@ public class City extends Settlement{
     }
 
     public RamzorColor calculateRamzorGrade(){
-
        return  this.getRamzorcolor().valueToColor(0.2*Math.pow(4,1.25*this.contagiousPercent())) ;
     }
     @Override

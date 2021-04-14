@@ -1,4 +1,4 @@
-package com.company;
+package simulation;
 
  public abstract  class  RandomV {
 

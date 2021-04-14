@@ -19,9 +19,9 @@ public class Healthy extends Person{
     //public methods
     public Person vaccinate(){
         Person vac_P = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
-        this.getSettlement().updatePerson(this,vac_P);
         return vac_P;
     }
+
     @Override
     public double contagionProbability() {
         return 1;

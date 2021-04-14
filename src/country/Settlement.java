@@ -6,13 +6,15 @@ import location.Point;
 import population.Person;
 import population.Sick;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Settlement {
     private String name;
     private Location location;
     private ArrayList<Person> people = new ArrayList<Person>();
-    private RamzorColor ramzorcolor;
+    protected RamzorColor ramzorcolor;
+    private int sick_counter=0;
 
 
     //----------start of constructor---------
@@ -36,9 +38,13 @@ public class Settlement {
     }
 
     protected RamzorColor getRamzorcolor() {
-        return ramzorcolor;
+        return this.calculateRamzorGrade();
     }
 
+    public ArrayList<Person> getPeople() {
+        return people;
+    }
+    protected  void setRamzorcolor(RamzorColor r){this.ramzorcolor=r;}
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;
@@ -75,6 +81,8 @@ public class Settlement {
 
             if(this.people.contains(person)==false)
                 this.people.add(person);
+            if(person instanceof Sick)
+                this.sick_counter++;
 
         return true;
     }
@@ -91,16 +99,7 @@ public class Settlement {
 
         return true;
     }
-    public  boolean updatePerson(Person ex_person_obj,Person up_person_obj){
 
-        if (this.people.contains(ex_person_obj) == false)
-            return false;
-        this.people.remove(ex_person_obj);
-        this.people.add(up_person_obj);
-
-        return true;
-
-    }
 
     @Override
     public String toString() {

@@ -12,8 +12,9 @@ public class Moshav extends Settlement{
     }
 
    public RamzorColor calculateRamzorGrade(){
+         this.ramzorcolor =this.ramzorcolor.valueToColor(0.3+3*Math.pow(Math.pow(1.2,this.ramzorcolor.getColorV())*(this.contagiousPercent()-0.35),5));
 
-        return this.getRamzorcolor().valueToColor(0.3+3*Math.pow(Math.pow(1.2,this.getRamzorcolor().getColorV())*(this.contagiousPercent()-0.35),5));
+        return this.ramzorcolor;
    }
 
     @Override

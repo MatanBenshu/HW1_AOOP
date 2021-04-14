@@ -4,6 +4,7 @@ import country.Settlement;
 import location.Point;
 import simulation.Simulation;
 
+import java.util.Objects;
 
 
 public class Vaccinated extends Person {
@@ -23,6 +24,20 @@ public class Vaccinated extends Person {
         }
         return Math.max(0.05,1.05/(t-14));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vaccinated that = (Vaccinated) o;
+        return vaccinationTime == that.vaccinationTime;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), vaccinationTime);
+    }
+
     @Override
     public String toString(){ //overriding the toString() method
         return " Vaccinated Age : "+this.getAge() +"Location : "+this.getLocation().toString() + " Settelment :" +this.getSettlement().toString() ;

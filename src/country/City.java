@@ -11,8 +11,10 @@ public class City extends Settlement{
     }
 
     public RamzorColor calculateRamzorGrade(){
-       return  this.getRamzorcolor().valueToColor(0.2*Math.pow(4,1.25*this.contagiousPercent())) ;
+        this.ramzorcolor = this.ramzorcolor.valueToColor(0.2*Math.pow(4,1.25*this.contagiousPercent())) ;
+       return  this.ramzorcolor;
     }
+
     @Override
     public String toString(){ //overriding the toString() method
         return "City : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.getRamzorcolor() ;

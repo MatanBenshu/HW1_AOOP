@@ -37,20 +37,17 @@ public abstract class Person {
         return this.settlement;
     }
 
-
+    public IVirus getVirus(){return null;}
     public void setSettlement(Settlement sat){this.settlement=settlement;}
 
     //------------end of getters and setters---------------------------
 
     public abstract double contagionProbability();
 
-   public Person contagion(IVirus iVirus){
-        Person p_S=new Sick(this.age,this.location,this.settlement,Simulation.Clock.now(),iVirus);
-        settlement.updatePerson(this,p_S);
-
-     return p_S;
-
-    }
+   public Person contagion(IVirus iVirus) {
+           Person p_S = new Sick(this.age, this.location, this.settlement, Simulation.Clock.now(), iVirus);
+           return p_S;
+   }
 
 
     public boolean equals(Person p) {

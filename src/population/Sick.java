@@ -4,6 +4,8 @@ import Virus.IVirus;
 import country.Settlement;
 import location.Point;
 
+import java.util.Objects;
+
 public class Sick extends Person {
  private long contagiousTime;
  private IVirus virus;
@@ -26,14 +28,31 @@ public class Sick extends Person {
                 '}';
     }
 
+    public IVirus getVirus() {
+        return virus;
+    }
+
     public long getContagiousTime() {
         return contagiousTime;
     }
     public Person recover(){
-        Person r_p = new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
-        this.getSettlement().updatePerson(this,r_p);
-        return r_p;
+
+        return new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sick sick = (Sick) o;
+        return contagiousTime == sick.contagiousTime && Objects.equals(virus, sick.virus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), contagiousTime, virus);
+    }
+
     public boolean tryToDie(){
         return this.virus.tryToKill(this);
     }

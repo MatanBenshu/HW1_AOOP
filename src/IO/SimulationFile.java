@@ -52,9 +52,8 @@ public class SimulationFile {
 
     private Healthy createHPerson(Settlement settle){
         int age= calcAge();
-        Point loc=settle.getLocation().getPosition();
-        Healthy h= new Healthy(age,loc,settle);
-        return h;
+        Point loc=settle.randomLocation();
+        return new Healthy(age,loc,settle);
     }
 
     private int calcAge(){

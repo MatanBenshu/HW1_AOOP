@@ -34,8 +34,13 @@ public class Location {
         return Objects.hash(getPosition(), getSize());
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Location{" +
+                "position=" + position +
+                ", size=" + size +
+                '}';
+    }
 }
 
 

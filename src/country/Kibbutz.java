@@ -12,11 +12,11 @@ public class Kibbutz extends Settlement{
 
     public RamzorColor calculateRamzorGrade(){
        this.ramzorcolor = this.ramzorcolor.valueToColor( 0.4+Math.pow(Math.pow(1.5,this.ramzorcolor.getColorV())*(this.contagiousPercent()-0.4),3));
-        return this.getRamzorcolor();
+        return this.ramzorcolor;
     }
     @Override
     public String toString(){ //overriding the toString() method
-        return "Kibbutz : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.getRamzorcolor() ;
+        return "Kibbutz : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.ramzorcolor ;
     }
 
 

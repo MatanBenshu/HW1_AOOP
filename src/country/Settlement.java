@@ -37,14 +37,13 @@ public class Settlement {
         return location;
     }
 
-    protected RamzorColor getRamzorcolor() {
-        return this.calculateRamzorGrade();
-    }
+//    protected RamzorColor getRamzorcolor() {
+//        return this.calculateRamzorGrade();
+//    }
 
     public ArrayList<Person> getPeople() {
         return people;
     }
-    protected  void setRamzorcolor(RamzorColor r){this.ramzorcolor=r;}
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;

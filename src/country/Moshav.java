@@ -19,7 +19,7 @@ public class Moshav extends Settlement{
 
     @Override
     public String toString(){ //overriding the toString() method
-        return "Moshav : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.getRamzorcolor() ;
+        return "Moshav : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.ramzorcolor ;
     }
 
 }

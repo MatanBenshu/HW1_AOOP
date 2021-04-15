@@ -13,38 +13,19 @@ import population.Sick;
 import java.util.ArrayList;
 
 public class Main {
-    private static final double percent_of_sick=0.01;
+    private static final double percent_of_sick=0.5;
     public static void main(String[] args) throws Exception {
-        System.out.println("start");
         SimulationFile X = new SimulationFile();
         Map y = X.loadMap();
-        System.out.println("start");
-
-        System.out.println("start");
-        int size=y.getSettlements().length;
-        System.out.println("start");
         for (int j = 0; j < 5; j++) {
                 makeSimulation(y.getSettlements());
-        }
-
-
-
-
-        System.out.println("fff");
-        for (int i = 0; i <size ; i++) {
-            System.out.println(y.getSettlements()[i]);
-            System.out.println(y.getSettlements()[i].contagiousPercent());
-            System.out.println(y.getSettlements()[i].calculateRamzorGrade());
-            System.out.println(y.getSettlements()[i].randomLocation());
-
-
 
         }
-
 
     }
 
     private  static void makeSimulation(Settlement[] settlement){
+        //** */
         int num_of_settlements=settlement.length;
         for (int k = 0; k <num_of_settlements ; k++) {
 
@@ -60,7 +41,7 @@ public class Main {
                         Person rand_person = randPerson(persons);
                         if(!(rand_person instanceof Sick))
                         {
-                            if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==false) {
+                            if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
                                 Person s=rand_person.contagion(sick_per.getVirus());
                                 persons.set(persons.indexOf(rand_person),s);
 

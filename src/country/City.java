@@ -17,6 +17,6 @@ public class City extends Settlement{
 
     @Override
     public String toString(){ //overriding the toString() method
-        return "City : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.getRamzorcolor() ;
+        return "City : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.ramzorcolor ;
     }
 }

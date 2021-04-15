@@ -1,3 +1,6 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
 package Virus;
 import population.Person;
 import population.Sick;

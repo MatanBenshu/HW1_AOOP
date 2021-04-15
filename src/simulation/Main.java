@@ -1,16 +1,20 @@
-package simulation;
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 
+package simulation;
 import IO.SimulationFile;
-import Virus.BritishVariant;
 import Virus.ChineseVariant;
 import Virus.IVirus;
+import Virus.BritishVariant;
 import Virus.SouthAfricanVariant;
+import country.Map;
 import country.Settlement;
 import country.Map;
 import population.Person;
 import population.Sick;
 
 import java.util.ArrayList;
+
 
 public class Main {
     private static final double percent_of_sick=0.5;
@@ -95,9 +99,9 @@ public class Main {
                 case 0:
                     return new ChineseVariant();
                 case 1:
-                    return new SouthAfricanVariant();
+                    return new Virus.SouthAfricanVariant();
                 case 2:
-                    return new BritishVariant();
+                    return new Virus.BritishVariant();
 
             }
         }

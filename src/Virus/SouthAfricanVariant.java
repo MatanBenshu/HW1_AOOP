@@ -1,3 +1,6 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
 package Virus;
 
 import simulation.RandomV;
@@ -6,7 +9,6 @@ import population.Sick;
 import java.lang.Math;
 
 public class SouthAfricanVariant implements IVirus{
-
 
     public SouthAfricanVariant() {}
 
@@ -58,4 +60,3 @@ public class SouthAfricanVariant implements IVirus{
         return " SouthAfricanVariant" ;
     }
 }
-

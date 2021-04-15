@@ -1,3 +1,6 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
 package country;
 
 import location.Location;
@@ -6,11 +9,14 @@ import population.Person;
 import java.util.ArrayList;
 
 public class City extends Settlement{
+
+    //------------Constructor---------//
     public City(String name, Location location) {
         super(name, location );
     }
 
     public RamzorColor calculateRamzorGrade(){
+        // calculate to
         this.ramzorcolor = this.ramzorcolor.valueToColor(0.2*Math.pow(4,1.25*this.contagiousPercent())) ;
        return  this.ramzorcolor;
     }

@@ -1,3 +1,6 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
 package population;
 
 import Virus.IVirus;

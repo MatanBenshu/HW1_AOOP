@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 public class Main {
-    private static final double percent_of_sick=0.5;
+    private static final double percent_of_sick=0.01;
     public static void main(String[] args) throws Exception {
         SimulationFile X = new SimulationFile();
         Map y = X.loadMap();

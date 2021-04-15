@@ -11,30 +11,26 @@ import location.Point;
 import location.Size;
 import population.Healthy;
 import population.Person;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import country.Map;
 public class SimulationFile {
-    private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";
+    //immutable, for converting file to map
+    private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";//file path
     public SimulationFile() throws Exception {
 
     }
     private Settlement[] readFile(String path) throws Exception {
-
+        //reading file and creating map instance
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
 
-
-
         ArrayList<Settlement> settlements= new ArrayList<Settlement>();//for size of settlements array
-        int j=0; //to iterate on settlements
 
         String s1 = br.readLine();
         while (s1.length() != 0) {
-            settlements.add(strToSettlement(s1));//by ref?
-            j++;
+            settlements.add(strToSettlement(s1));
             s1 = br.readLine();
         }
         br.close();
@@ -47,6 +43,7 @@ public class SimulationFile {
     }
 
     private void createHealthyArr(int size, Settlement settlement){
+        //returns healthy persons array according to size and settlement
         for(int i=0;i<size;i++)
         {
             settlement.addPerson(createHPerson(settlement));
@@ -54,12 +51,14 @@ public class SimulationFile {
     }
 
     private Healthy createHPerson(Settlement settle){
+        //returns healthy persons array according to settlement
         int age= calcAge();
         Point loc=settle.randomLocation();
         return new Healthy(age,loc,settle);
     }
 
     private int calcAge(){
+        //returns random age
         double y= Math.random()*4;
         Random rand= new Random();
         double x;
@@ -70,6 +69,7 @@ public class SimulationFile {
         return (int)(5*x+y);
     }
     private Settlement strToSettlement(String str){
+        //converting string to settlement
         Settlement place = null;
 
         int num_of_crit=7;
@@ -110,6 +110,7 @@ public class SimulationFile {
     }
 
     public Map loadMap() throws Exception {
+        //converting file to Map
         Map mp = new Map(readFile(file));
         return mp;
     }

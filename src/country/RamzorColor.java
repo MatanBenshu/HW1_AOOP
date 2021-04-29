@@ -10,7 +10,7 @@ public enum RamzorColor {
     private final double value;
     private final String color;
     private final Color colored;
-    private final float cross_prob;
+    private final double cross_prob;
 
     private RamzorColor(String color, double V) {
         this.value = V;

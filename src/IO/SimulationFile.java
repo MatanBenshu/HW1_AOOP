@@ -15,9 +15,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import country.Map;
+
 public class SimulationFile {
     //immutable, for converting file to map
     private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";//file path
+    static double max_capacity=1.3;
     public SimulationFile() throws Exception {
 
     }
@@ -27,17 +29,25 @@ public class SimulationFile {
         BufferedReader br = new BufferedReader(fr);
 
         ArrayList<Settlement> settlements= new ArrayList<Settlement>();//for size of settlements array
-
+        ArrayList<String> hashtags= new ArrayList<String>();
         String s1 = br.readLine();
         while (s1.length() != 0) {
-            settlements.add(strToSettlement(s1));
-            s1 = br.readLine();
+            if (s1.charAt(0)==('#')){
+                hashtags.add(s1);
+                s1 = br.readLine();
+                continue;
+            }
+            else {
+                settlements.add(strToSettlement(s1));
+                s1 = br.readLine();
+            }
         }
         br.close();
         fr.close();
 
         Settlement[] conv = new Settlement[settlements.size()];
         settlements.toArray(conv);
+
         return conv;
 
     }
@@ -80,7 +90,6 @@ public class SimulationFile {
             String setName = line[1];
             Point p = new Point(Integer.parseInt(line[2]), Integer.parseInt(line[3]));
             Size s = new Size(Integer.parseInt(line[4]), Integer.parseInt(line[5]));
-            ArrayList<Person> per = null;
 
             switch (line[0]) {
                 case "City":
@@ -109,11 +118,16 @@ public class SimulationFile {
 
     }
 
+    private void passage(Settlement[] settlements, ArrayList<String> union){
+
+    }
+
     public Map loadMap() throws Exception {
         //converting file to Map
         Map mp = new Map(readFile(file));
         return mp;
     }
+
 
 
 }

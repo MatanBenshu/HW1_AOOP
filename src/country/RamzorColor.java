@@ -3,14 +3,19 @@
 
 package country;
 
+import java.awt.*;
+
 public enum RamzorColor {
     GREEN("Green", 0.4), YELLOW("Yellow", 0.6), ORANGE("Orange", 0.8), RED("Red", 1);
     private final double value;
     private final String color;
+    private final Color colored;
+    private final float cross_prob;
 
     private RamzorColor(String color, double V) {
         this.value = V;
         this.color = color;
+        this.colored= Color.decode(color); //create new color instance according to given string
     }
     public double getColorV() {
         return this.value;

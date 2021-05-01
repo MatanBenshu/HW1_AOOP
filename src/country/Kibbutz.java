@@ -9,8 +9,8 @@ import population.Person;
 import java.util.ArrayList;
 
 public class Kibbutz extends Settlement{
-    public Kibbutz(String name, Location location) {
-        super(name, location);
+    public Kibbutz(String name, Location location,int maxres,ArrayList<Settlement> near_settle) {
+        super(name, location,maxres,near_settle);
     }
 
     public RamzorColor calculateRamzorGrade(){

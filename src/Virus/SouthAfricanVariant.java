@@ -50,7 +50,7 @@ public class SouthAfricanVariant implements IVirus{
     @Override
     public boolean tryToKill(Sick s){//calculate the probability that s(sick) will die
         double die= getDeathProbability(s.getAge());
-        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2)));
+        double prob= Math.max(0,die-0.01*die*(Math.pow((s.DaysPastFromCont()-15),2)));
         return RandomV.GetRand(0, 1) < prob;
     }
     @Override

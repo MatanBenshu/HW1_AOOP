@@ -6,16 +6,17 @@ package country;
 import java.awt.*;
 
 public enum RamzorColor {
-    GREEN("Green", 0.4), YELLOW("Yellow", 0.6), ORANGE("Orange", 0.8), RED("Red", 1);
+    GREEN("Green", 0.4,1), YELLOW("Yellow", 0.6,0.8), ORANGE("Orange", 0.8,0.6), RED("Red", 1,0.4);
     private final double value;
     private final String color;
     private final Color colored;
     private final double cross_prob;
 
-    private RamzorColor(String color, double V) {
+    private RamzorColor(String color, double V,final double cross) {
         this.value = V;
         this.color = color;
         this.colored= Color.decode(color); //create new color instance according to given string
+        this.cross_prob=cross;
     }
     public double getColorV() {
         return this.value;
@@ -32,7 +33,7 @@ public enum RamzorColor {
         else return RED;
 
     }
-
+    public double getCross_prob(){return this.cross_prob;}
     @Override
     public String toString() {
         return "RamzorColor{" +

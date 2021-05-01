@@ -13,18 +13,25 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Settlement {
+    private ArrayList<Settlement> Related_settlements ;
     private String name;
     private Location location;
     private ArrayList<Person> people = new ArrayList<Person>();
+    private ArrayList<Person> h_people = new ArrayList<Person>();
     protected RamzorColor ramzorcolor;
-    private int sick_counter=0;
-
+    private ArrayList<Person> sick_people= new ArrayList<Person>();
+    private int max_residents;
+    private int vaccine_num=0;
 
     //----------start of constructor---------
-    public Settlement(String name, Location location) {
+    public Settlement(String name, Location location,int max_residents,ArrayList<Settlement> Rel_settle) {
         this.name = new String(name);
         this.location = location;
         this.ramzorcolor = RamzorColor.GREEN;
+        this.max_residents=max_residents;
+        this.Related_settlements=Rel_settle;
+
+
     }
 
 //--------end of constructor---------
@@ -44,9 +51,20 @@ public class Settlement {
 //        return this.calculateRamzorGrade();
 //    }
 
-    public ArrayList<Person> getPeople() {
-        return people;
+    public Person getPerson(int index) { return this.people.get(index); }
+    public final ArrayList<Person> getPeople(){return this.people;}
+
+    public Person getH_person(int index) { return h_people.get(index); }
+
+    public final ArrayList<Person> getH_people() {
+        return  this.h_people;
     }
+
+    public Person getSickPerson(int index) { return sick_people.get(index); }
+    public int getResidentsNum(){ return this.people.size(); }
+    public  int getSickNum(){return this.sick_people.size();}
+    public int getHealthNum(){return this.h_people.size();}
+
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;
@@ -81,27 +99,57 @@ public class Settlement {
 
     public boolean addPerson(Person person) {
 
-            if(this.people.contains(person)==false)
-                this.people.add(person);
-            if(person instanceof Sick)
-                this.sick_counter++;
-
-        return true;
+            if(this.people.contains(person)==false) {
+                if (this.people.size() <max_residents){
+                    this.people.add(person);
+                    if (person instanceof Sick)
+                        sick_people.add(person);
+                    else
+                        h_people.add(person);}
+                return true;
+            }
+        return false;
     }
+    public boolean Update_person_status(Person old_obj,Person new_obj )
+    {
+        if(this.people.contains(old_obj)){
+            if (new_obj instanceof Sick){
+                this.people.set(this.people.indexOf(old_obj),new_obj);
+                this.h_people.remove(old_obj);
+                this.sick_people.add(new_obj);
+            }
+            else {//its instansce of health
+                this.people.set(this.people.indexOf(old_obj),new_obj);
+                this.sick_people.remove(old_obj);
+                this.h_people.add(new_obj);
+            }
+                return true;
 
+        }
+
+        return false;
+    }
     public boolean transferPerson(Person person, Settlement new_sattle) {
         //start change settlement persons
         if(this.people.contains(person)==false)
             return false;
-
-        new_sattle.addPerson(person);
-        this.people.remove(person);
-        ////start change person settlement
-        person.setSettlement(new_sattle);
-
+        if(new_sattle.FullSettlement())
+            return false;
+        if (transferProb(new_sattle)==true) {
+            new_sattle.addPerson(person);
+            this.people.remove(person);
+            ////start change person settlement
+            person.setSettlement(new_sattle);
+        }
         return true;
     }
 
+    public boolean FullSettlement(){
+        if (this.people.size()<this.max_residents)
+            return false;
+        else
+            return true;
+    }
 
     @Override
     public String toString() {
@@ -111,6 +159,12 @@ public class Settlement {
                 ", people=" + people +
                 ", ramzorcolor=" + ramzorcolor +
                 '}';
+    }
+    private boolean transferProb(Settlement new_settle){
+        double prob=this.calculateRamzorGrade().getCross_prob()*new_settle.calculateRamzorGrade().getCross_prob();
+        if(prob<RandomV.GetRand(0,1))
+            return true;
+        return false;
     }
 //----------end of public methods---------
 

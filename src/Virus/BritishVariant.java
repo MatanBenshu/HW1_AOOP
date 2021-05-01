@@ -3,6 +3,8 @@ package Virus;
 import simulation.RandomV;
 import population.Person;
 import population.Sick;
+import simulation.Simulation;
+
 import java.lang.Math;
 
 public class BritishVariant implements IVirus{
@@ -27,6 +29,7 @@ public class BritishVariant implements IVirus{
     @Override
     public boolean tryToContagion(Person p1, Person p2) {
         //calculate the probability that p1(sick) will contagion p2
+
         if( !(p2 instanceof Sick))
         {
             double distance = p1.getLocation().distanceFrom(p2.getLocation());
@@ -41,7 +44,7 @@ public class BritishVariant implements IVirus{
     public boolean tryToKill(Sick s){
         //calculate the probability that s(sick) will die
         double die= getDeathProbability(s.getAge());
-        double prob= Math.max(0,die-0.01*die*(Math.pow((s.getContagiousTime()-15),2)));
+        double prob= Math.max(0,die-0.01*die*(Math.pow((s.DaysPastFromCont()-15),2)));
         return RandomV.GetRand(0, 1) < prob;
     }
     @Override

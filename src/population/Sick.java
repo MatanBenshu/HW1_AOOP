@@ -6,6 +6,7 @@ package population;
 import Virus.IVirus;
 import country.Settlement;
 import location.Point;
+import simulation.Simulation;
 
 import java.util.Objects;
 
@@ -38,10 +39,7 @@ public class Sick extends Person {
         return virus;
     }
 
-    public long getContagiousTime() {
-        //return person's contagion time
-        return contagiousTime;
-    }
+
     public Person recover(){
         //return converting this person to convalescent person
         return new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
@@ -69,5 +67,5 @@ public class Sick extends Person {
         System.out.print("Already sick!");
         return 0;
     }
-
+    public long DaysPastFromCont(){return Simulation.Clock.DaysPast(contagiousTime);}
 }

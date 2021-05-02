@@ -16,10 +16,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import country.Map;
 
+
 public class SimulationFile {
     //immutable, for converting file to map
     private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";//file path
-    static double max_capacity=1.3;
+    private final double MAX_RESIDENDS=1.3;
     public SimulationFile() throws Exception {
 
     }
@@ -85,21 +86,21 @@ public class SimulationFile {
         int num_of_crit=7;
         str=str.replaceAll(" ", "");
         String[] line = str.split(";");
-        int len=line.length;
         if(line.length>0 && line.length== num_of_crit) {
             String setName = line[1];
             Point p = new Point(Integer.parseInt(line[2]), Integer.parseInt(line[3]));
             Size s = new Size(Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+            int maxRes= (int)(Double.parseDouble(line[6])*MAX_RESIDENDS);
 
             switch (line[0]) {
                 case "City":
-                    place = new City(setName, new Location(p, s));
+                    place = new City(setName, new Location(p, s), maxRes, new ArrayList<Settlement>());
                     break;
                 case "Kibbutz":
-                    place = new Kibbutz(setName, new Location(p, s));
+                    place = new Kibbutz(setName, new Location(p, s),maxRes,new ArrayList<Settlement>());
                     break;
                 case "Moshav":
-                    place = new Moshav(setName, new Location(p, s));
+                    place = new Moshav(setName, new Location(p, s),maxRes,new ArrayList<Settlement>());
                     break;
                 default:
                     System.out.print("No such settlement! ");
@@ -119,7 +120,26 @@ public class SimulationFile {
     }
 
     private void passage(Settlement[] settlements, ArrayList<String> union){
-
+        int set1=0;
+        int set2=0;
+        for(String str:union) {
+            str = str.replaceAll(" ", "");
+            String[] line = str.split(";");
+            //keep in mind string from txt is:#;set1;set2
+            set1= findSettlement(settlements,line[1]);
+            set2=findSettlement(settlements,line[2]);
+            settlements[set1].addPassage(settlements[set2]);
+            settlements[set2].addPassage(settlements[set1]);
+        }
+    }
+    private int findSettlement(Settlement[] settlements,String settlementName){
+        int i;
+        for(i=0;i< settlements.length;i++)
+        {
+            if (settlementName.equals(settlements[i].getName()))
+                return i;
+        }
+        return -1;
     }
 
     public Map loadMap() throws Exception {

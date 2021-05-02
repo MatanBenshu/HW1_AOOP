@@ -151,6 +151,8 @@ public class Settlement {
             return true;
     }
 
+    public void addPassage(Settlement settlement){Related_settlements.add(settlement);}
+
     @Override
     public String toString() {
         return "Settlement{" +

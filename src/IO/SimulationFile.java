@@ -19,12 +19,13 @@ import country.Map;
 
 public class SimulationFile {
     //immutable, for converting file to map
-    private static final String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";//file path
+    public static  String file = "C:\\Users\\מתן בן שושן\\IdeaProjects\\HW1_AOOP\\src\\IO\\input.txt";//file path
+    public static boolean simulation_run=false;
     private final double MAX_RESIDENDS=1.3;
     public SimulationFile() throws Exception {
-
     }
     private Settlement[] readFile(String path) throws Exception {
+
         //reading file and creating map instance
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);

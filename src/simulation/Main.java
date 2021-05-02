@@ -9,6 +9,8 @@ import country.Map;
 import country.Settlement;
 import population.Person;
 import population.Sick;
+import ui.MainWindow;
+import ui.Menu;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 public class Main {
     private static final double percent_of_sick=0.01;
     public static void main(String[] args) throws Exception {
+        MainWindow mainWindow= new MainWindow();
+
         SimulationFile X = new SimulationFile();
         Map y = X.loadMap();
         for (int i = 0; i < y.getSettlements().length; i++) {

@@ -1,25 +1,30 @@
 package ui;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
+    private   JMenuBar menu_bar;
+    private JPanel map_panel ;
+    private JSlider speed_slider;
+    static boolean simulation_running =false;
 
-    public MainWindow() {
-
-        super("Main Window");
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        JPanel MenuBar = new JPanel();
-        MenuBar.add(new JButton("Menu"));
-        JPanel MapPanel = new JPanel();
-        MapPanel.add(new JButton("Map Panel"));
-        JSlider speedslider = new JSlider();
-        speedslider.add(new JLabel("Simulation Speed Slider"));
-        this.add(MenuBar);
-        this.add(MapPanel);
-        this.add(speedslider);
+    public MainWindow(){
+        this.menu_bar=new Menu();
+        this.setTitle("Main Window");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.PAGE_AXIS));
+        this.setJMenuBar(menu_bar);
         this.setVisible(true);
-
 
     }
 
 
+
 }
+
+
+
+
+

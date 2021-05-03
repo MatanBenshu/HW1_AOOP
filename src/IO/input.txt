@@ -1,4 +1,0 @@
-City; Ashdod; 0;0; 90;50; 100
-City; Beer-Sheva; 30;0; 80;80; 100
-Moshav; Gevim; 15;15; 10;20; 100
-

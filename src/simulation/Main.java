@@ -7,6 +7,7 @@ import Virus.ChineseVariant;
 import Virus.IVirus;
 import country.Map;
 import country.Settlement;
+import population.Convalescent;
 import population.Person;
 import population.Sick;
 import ui.MainWindow;
@@ -16,60 +17,80 @@ import java.util.ArrayList;
 
 
 public class Main {
-    private static final double percent_of_sick=0.01;
+    private static final double percent_of_sick=0.2;
+    private static final int tryContagion=3;
+    private static final double tryPass=0.03;
     public static void main(String[] args) throws Exception {
         MainWindow mainWindow= new MainWindow();
-
+//----------------Read from file-----------------------//
         SimulationFile X = new SimulationFile();
         Map y = X.loadMap();
+
+//----------------Make random healthy people sick----------------//
         for (int i = 0; i < y.getSettlements().length; i++) {
             makeSick(y.getSettlements()[i],sizeOfSick(y.getSettlements()[i].getResidentsNum(),percent_of_sick));
         }
-        for (int j = 0; j < 5; j++) {
-                makeSimulation(y.getSettlements());
+//----------------------Try to contagion-------------------------------//
+        for (int j = 0; j < y.getSettlements().length; j++) {
+                tryCon(y.getSettlements());
                 System.out.println(y.getSettlements()[1]);
             System.out.println(y.getSettlements()[1].contagiousPercent());
         }
-
-    }
-
-    private  static void makeSimulation(Settlement[] settlement){
-        //** */
-        int num_of_settlements=settlement.length;
-        for (int k = 0; k <num_of_settlements ; k++) {
-
-//            ArrayList<Person> persons = settlement[k].getPerson();//saving people array
-            int size_of_sick = settlement[k].getSickNum();
-//            del-ArrayList<Person> sick_arry=makeSickArry(settlement[k],size_of_sick);
-            int pepole_on_sattel = settlement[k].getResidentsNum();
-
-            for (int i = 0;  i < size_of_sick; i++)
+//-----------------------After 25 days sick is convalescent---------//
+        for (int i = 0; i < y.getSettlements().length; i++) {
+            Settlement currentSettlement=y.getSettlements()[i];
+            for(int p=0;p<currentSettlement.getSickNum();p++)
             {
-                    Person sick_per=settlement[k].getSickPerson(i);
-                    int j = 0;//for try to contagion 6 time loop
-                    while (j < 6) {
-                        Person rand_person = randPerson(settlement[k].getPeople());
-                        if(!(rand_person instanceof Sick))
-                        {
-                            if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
-                                Person s=rand_person.contagion(sick_per.getVirus());
-                                settlement[k].Update_person_status(rand_person,s);
-
-                            }
-                            j++;
-                        }
-
-                    }
+                Sick s= currentSettlement.getSickPerson(p);
+                if(s.DaysPastFromCont()>=25) {//need to return sick not Person{
+                    Convalescent c = s.recover();
+                    currentSettlement.Update_person_status(s,c);
                 }
-
             }
         }
 
+//---------------------Try to pass---------------------//
+        for(int i=0;i<y.getSettlements().length;i++){
+            Settlement currentSettlement=y.getSettlements()[i];
+            int numOfPasses=(int)(currentSettlement.getResidentsNum()*tryPass);
+            for(int j=0;j<numOfPasses;j++){
+                Person p= randPerson(currentSettlement.getPeople());
+                Settlement passTo= RandomV.GetRand(currentSettlement.getPassages().length);
+                boolean passed=currentSettlement.transferPerson(p,passTo);
+                System.out.print("Person "+p+"transfer to: "+passTo.getName()+ "status= "+passed);
+            }
+        }
+//------------------Vaccine shot----------------------//
+        for(int i=0;i<y.getSettlements().length;i++){
+            y.getSettlements()[i].giveVaccines();
+        }
+    }
 
 
 
-
-
+    private  static void tryCon(Settlement[] settlement){
+        //** */
+        int num_of_settlements=settlement.length;
+        for (int k = 0; k <num_of_settlements ; k++) {
+            int size_of_sick = settlement[k].getSickNum();
+            for (int i = 0;  i < size_of_sick; i++)
+            {
+                Person sick_per=settlement[k].getSickPerson(i);
+                int j = tryContagion;
+                while (j >0) {//for try to contagion const time loop
+                    Person rand_person = randPerson(settlement[k].getPeople());
+                    if(!(rand_person instanceof Sick))
+                    {
+                        if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
+                            Person s=rand_person.contagion(sick_per.getVirus());
+                            settlement[k].Update_person_status(rand_person,s);
+                            }
+                        j++;
+                        }
+                    }
+                }
+            }
+        }
 
     private static int sizeOfSick(int ResidentsNum, double precent) {
         return (int) (ResidentsNum * precent);
@@ -77,17 +98,13 @@ public class Main {
 
     private static void makeSick(Settlement settlement, int size_of_sick) {
 
-                //del-ArrayList<Person> sick_arr = new ArrayList<Person>() ;
-                IVirus rand_virus=rand_Virus();
-                for (int i = 0; i < size_of_sick;i++ ) {
-                    Person exists_per = randPerson( settlement.getH_people());
-                    settlement.Update_person_status(exists_per, exists_per.contagion(rand_virus));
-
-                    //del-sick_arr.add(sick_person);
-                }
-
-      //  return sick_arr;
+        IVirus rand_virus=rand_Virus();
+        for (int i = 0; i < size_of_sick;i++ ) {
+            Person exists_per = randPerson( settlement.getH_people());
+            settlement.Update_person_status(exists_per, exists_per.contagion(rand_virus));
+        }
     }
+
     private static Person randPerson( final  ArrayList<Person> A_persons){
         int size=A_persons.size();
         int i =RandomV.GetRand(size);

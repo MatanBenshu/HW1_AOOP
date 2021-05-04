@@ -19,7 +19,7 @@ public class Statistics extends JDialog  {
         private JButton save_button = new JButton("Save");
         private JButton add_sick = new JButton("Add Sick");
         private JButton vaccinate = new JButton("Vaccinate");
-        private String[] columns_title={"name","type","ramzor color","sick percent","Vaccines given","Number of deceased","number of people"};
+        private String[] columns_title;
 
     public Statistics(){
         super(MainWindow.SMainWindow.getWindowAddres(),"Statistics Window",false);

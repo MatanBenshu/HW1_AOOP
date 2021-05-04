@@ -153,7 +153,7 @@ public class Settlement {
         else
             return true;
     }
-    public
+
     public void addPassage(Settlement settlement){Related_settlements.add(settlement);}
     public void giveVaccines(){
         //give vaccine to healthy people and vaccine num--

@@ -2,7 +2,6 @@ package ui;
 
 
 import IO.SimulationFile;
-import country.Settlement;
 import simulation.Main;
 
 import javax.swing.*;
@@ -58,7 +57,7 @@ public class MenuBar extends JMenuBar {
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Statistics dialog =new Statistics();
+                StatisticsDialog dialog =new StatisticsDialog();
             }
         });
 
@@ -108,7 +107,41 @@ public class MenuBar extends JMenuBar {
             }
         });
         simulation.add(pause_item);
+        JMenuItem help_item=new JMenuItem("Help");
 
+        help.add(help_item);
+        help_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog help_dialog = new JDialog(MainWindow.SMainWindow.getWindowAddres(), "Help",true);
+                help_dialog.setBounds(0,0,500,500);
+                JTextArea text = new JTextArea();
+                text.setText("menu bar option:\n" +
+                        "file option :\n" +
+                        "1)load only .txt files\n" +
+                        "2)statistics optin:work if the user load file,this option show all settlement stats\n" +
+                        "3)exit option close the program\n" +
+                        "simulation option:\n" +
+                        "1)load file.txt before playing sim\n" +
+                        "2)pause is possible only if the sim is running");
+                text.setBounds(0,0,400,400);
+                text.setLineWrap(true);
+                text.setWrapStyleWord(true);
+                help_dialog.add(text);
+                help_dialog.setVisible(true);
+            }
+        });
+        JMenuItem about_item =new JMenuItem("About");
+        help.add(about_item);
+        about_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog about_dialog = new JDialog(MainWindow.SMainWindow.getWindowAddres(), "About",false);
+                about_dialog.setBounds(0,0,500,500);
+                JTextArea text = new JTextArea();
+                text.setText("this program ");
+            }
+        });
 
     }
 

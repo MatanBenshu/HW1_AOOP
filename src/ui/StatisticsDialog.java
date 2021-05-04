@@ -1,6 +1,7 @@
 package ui;
 
 import country.Settlement;
+import simulation.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 
-public class Statistics extends JDialog  {
+public class StatisticsDialog extends JDialog  {
     private String user_string;
     private JTextField text_filed = new JTextField(20);
         private JComboBox<Settlement> col_select=new JComboBox<Settlement>();
@@ -21,12 +22,13 @@ public class Statistics extends JDialog  {
         private JButton vaccinate = new JButton("Vaccinate");
         private String[] columns_title;
 
-    public Statistics(){
+    public StatisticsDialog(){
         super(MainWindow.SMainWindow.getWindowAddres(),"Statistics Window",false);
         this.setBounds(0,0,800,500);
         this.north_panel.setLayout(new BoxLayout(north_panel,BoxLayout.LINE_AXIS));
         this.north_panel.setPreferredSize(new Dimension(800,30));
         this.text_filed.setPreferredSize(new Dimension(100,30));
+        new StaticTable(Main.y,this);
         text_filed.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +69,7 @@ public class Statistics extends JDialog  {
         south_panel.add(vaccinate);
         this.add(south_panel,BorderLayout.SOUTH);
         //end of setting south panel
-        this.stats_table =new JTable()
+
         this.setVisible(true);
 
    }

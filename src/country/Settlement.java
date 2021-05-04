@@ -60,10 +60,11 @@ public class Settlement {
         return  this.h_people;
     }
 
-    public Person getSickPerson(int index) { return sick_people.get(index); }
+    public Sick getSickPerson(int index) { return sick_people.get(index); }
     public int getResidentsNum(){ return this.people.size(); }
     public  int getSickNum(){return this.sick_people.size();}
     public int getHealthNum(){return this.h_people.size();}
+    public ArrayList<Settlement> getPassages(){return this.Related_settlements;}
 
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
@@ -152,7 +153,11 @@ public class Settlement {
     }
 
     public void addPassage(Settlement settlement){Related_settlements.add(settlement);}
-
+    public void giveVaccines(){
+        if(vaccine_num>0){
+            //give vaccine to healthy people and vaccine num--
+        }
+    }
     @Override
     public String toString() {
         return "Settlement{" +

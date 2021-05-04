@@ -48,6 +48,7 @@ public class SimulationFile {
         fr.close();
 
         Settlement[] conv = new Settlement[settlements.size()];
+        passage(conv,hashtags);
         settlements.toArray(conv);
 
         return conv;

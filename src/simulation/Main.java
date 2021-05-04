@@ -55,7 +55,7 @@ public class Main {
             int numOfPasses=(int)(currentSettlement.getResidentsNum()*tryPass);
             for(int j=0;j<numOfPasses;j++){
                 Person p= randPerson(currentSettlement.getPeople());
-                Settlement passTo= RandomV.GetRand(currentSettlement.getPassages().length);
+                Settlement passTo= currentSettlement.getPassages().get(RandomV.GetRand(currentSettlement.getPassages().size()));
                 boolean passed=currentSettlement.transferPerson(p,passTo);
                 System.out.print("Person "+p+"transfer to: "+passTo.getName()+ "status= "+passed);
             }

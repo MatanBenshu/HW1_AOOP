@@ -3,10 +3,14 @@
 
 package population;
 
+import Virus.BritishVariant;
+import Virus.ChineseVariant;
 import Virus.IVirus;
+import Virus.SouthAfricanVariant;
 import country.Settlement;
 import location.Location;
 import location.Point;
+import simulation.RandomV;
 import simulation.Simulation;
 
 import java.util.Objects;
@@ -47,9 +51,25 @@ public abstract class Person {
 
     public abstract double contagionProbability();
 
-   public Person contagion(IVirus iVirus) {
-           Person p_S = new Sick(this.age, this.location, this.settlement, Simulation.Clock.now(), iVirus);
-           return p_S;
+   public Person contagion() {
+       int randomVirus=RandomV.GetRand(IVirus.num_of_virus);
+       IVirus vir;
+       switch(randomVirus){
+
+           case 0:
+               vir=new ChineseVariant();
+               break;
+           case 1:
+               vir=new BritishVariant();
+               break;
+           case 2:
+               vir=new SouthAfricanVariant();
+               break;
+           default:
+               vir=new ChineseVariant();
+       }
+       Person p_S = new Sick(this.age, this.location, this.settlement, Simulation.Clock.now(),vir );
+       return p_S;
    }
 
 

@@ -7,6 +7,10 @@ import simulation.RandomV;
 import location.Location;
 import location.Point;
 import population.Person;
+import population.Healthy;
+import population.Vaccinated;
+import population.Convalescent;
+
 import population.Sick;
 
 import java.awt.*;
@@ -17,9 +21,9 @@ public class Settlement {
     private String name;
     private Location location;
     private ArrayList<Person> people = new ArrayList<Person>();
-    private ArrayList<Person> h_people = new ArrayList<Person>();
+    private ArrayList<Healthy> h_people = new ArrayList<Healthy>();
     protected RamzorColor ramzorcolor;
-    private ArrayList<Person> sick_people= new ArrayList<Person>();
+    private ArrayList<Sick> sick_people= new ArrayList<Sick>();
     private int max_residents;
     private int vaccine_num=0;
 
@@ -30,8 +34,6 @@ public class Settlement {
         this.ramzorcolor = RamzorColor.GREEN;
         this.max_residents=max_residents;
         this.Related_settlements=Rel_settle;
-
-
     }
 
 //--------end of constructor---------
@@ -56,7 +58,7 @@ public class Settlement {
 
     public Person getH_person(int index) { return h_people.get(index); }
 
-    public final ArrayList<Person> getH_people() {
+    public final ArrayList<Healthy> getH_people() {
         return  this.h_people;
     }
 
@@ -104,9 +106,11 @@ public class Settlement {
                 if (this.people.size() <max_residents){
                     this.people.add(person);
                     if (person instanceof Sick)
-                        sick_people.add(person);
+                        sick_people.add((Sick) person);
                     else
-                        h_people.add(person);}
+                        if (person instanceof Healthy)
+                             h_people.add((Healthy) person);}
+                    else
                 return true;
             }
         return false;

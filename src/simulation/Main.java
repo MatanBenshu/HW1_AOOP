@@ -82,7 +82,7 @@ public class Main {
                     if(!(rand_person instanceof Sick))
                     {
                         if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
-                            Person s=rand_person.contagion(sick_per.getVirus());
+                            Person s=rand_person.contagion();
                             settlement[k].Update_person_status(rand_person,s);
                             }
                         j++;
@@ -98,10 +98,9 @@ public class Main {
 
     private static void makeSick(Settlement settlement, int size_of_sick) {
 
-        IVirus rand_virus=rand_Virus();
         for (int i = 0; i < size_of_sick;i++ ) {
             Person exists_per = randPerson( settlement.getH_people());
-            settlement.Update_person_status(exists_per, exists_per.contagion(rand_virus));
+            settlement.Update_person_status(exists_per, exists_per.contagion());
         }
     }
 

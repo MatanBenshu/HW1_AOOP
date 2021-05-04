@@ -24,5 +24,9 @@ public class Moshav extends Settlement{
     public String toString(){ //overriding the toString() method
         return "Moshav : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.ramzorcolor ;
     }
+    @Override
+    public String SettlementType(){
+        return "Moshav";
+    }
 
 }

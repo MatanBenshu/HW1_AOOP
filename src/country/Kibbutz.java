@@ -21,6 +21,10 @@ public class Kibbutz extends Settlement{
     public String toString(){ //overriding the toString() method
         return "Kibbutz : "+this.getName() +"Location : "+getLocation() + " RamzorColor :" +this.ramzorcolor ;
     }
+    @Override
+    public String SettlementType(){
+        return "Kibbutz";
+    }
 
 
 }

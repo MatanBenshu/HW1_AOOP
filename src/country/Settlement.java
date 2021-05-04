@@ -59,7 +59,7 @@ public class Settlement {
     public  int getSickNum(){return this.sick_people.size();}
     public int getHealthNum(){return this.not_sick_people.size();}
     public ArrayList<Settlement> getPassages(){return this.Related_settlements;}
-
+    public String SettlementType(){return null;}
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;

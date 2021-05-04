@@ -50,7 +50,6 @@ public class Settlement {
     }
     public Person getPerson(int index) { return this.people.get(index); }
     public final ArrayList<Person> getPeople(){return this.people;}
-    public Person getH_person(int index) { return not_sick_people.get(index); }
     public final ArrayList<Person> get_not_sick_people() {return  this.not_sick_people;}
     public Sick getSickPerson(int index) { return sick_people.get(index); }//get sick in index
     public final ArrayList<Sick> getSick_people(){return this.sick_people;}//get sick array
@@ -93,15 +92,15 @@ public class Settlement {
 
     public boolean addPerson(Person person) {
 
-            if(this.people.contains(person)==false) {
-                if (getResidentsNum() <max_residents){
-                    this.people.add(person);
-                    if (person instanceof Sick)
-                        sick_people.add((Sick) person);
-                    else
-                        not_sick_people.add( person);}
-                return true;
-            }
+        if(this.people.contains(person)==false) {
+            if (getResidentsNum() <max_residents){
+                this.people.add(person);
+                if (person instanceof Sick)
+                    sick_people.add((Sick) person);
+                else
+                    not_sick_people.add( person);}
+            return true;
+        }
         return false;
     }
     public boolean Update_person_status(Person old_obj,Person new_obj )
@@ -123,7 +122,7 @@ public class Settlement {
                     this.not_sick_people.set(this.people.indexOf(old_obj),new_obj);
                 }
             }
-                return true;
+            return true;
 
         }
 
@@ -154,7 +153,7 @@ public class Settlement {
         else
             return true;
     }
-
+    public
     public void addPassage(Settlement settlement){Related_settlements.add(settlement);}
     public void giveVaccines(){
         //give vaccine to healthy people and vaccine num--

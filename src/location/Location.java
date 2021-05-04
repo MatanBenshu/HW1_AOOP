@@ -25,7 +25,6 @@ public class Location {
     }
 
 
-
     public boolean equals(Location o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;

@@ -33,11 +33,11 @@ public class SimulationFile {
         ArrayList<Settlement> settlements= new ArrayList<Settlement>();//for size of settlements array
         ArrayList<String> hashtags= new ArrayList<String>();
         String s1 = br.readLine();
-        while (s1.length() != 0) {
-            if (s1.charAt(0)==('#')){
+        while (s1!=null) {
+            if (s1.charAt(0)==('#'))
+            {
                 hashtags.add(s1);
-                s1 = br.readLine();
-                continue;
+                s1=br.readLine();
             }
             else {
                 settlements.add(strToSettlement(s1));
@@ -48,8 +48,9 @@ public class SimulationFile {
         fr.close();
 
         Settlement[] conv = new Settlement[settlements.size()];
-        passage(conv,hashtags);
+
         settlements.toArray(conv);
+        passage(conv,hashtags);
 
         return conv;
 

@@ -17,4 +17,13 @@ public class Map {
     public void setSettlements(Settlement[] settlements) {
         this.settlements = settlements;
     }
+
+    public String[] Get_settlementsNameArry(){
+        String[] names = new String[settlements.length];
+        for (int i = 0; i < settlements.length; i++) {
+            names[i]=settlements[i].getName();
+        }
+        return names;
+
+    }
 }

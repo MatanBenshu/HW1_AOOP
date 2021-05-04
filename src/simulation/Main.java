@@ -17,18 +17,19 @@ import java.util.ArrayList;
 
 
 public class Main {
+    public static Map y;
     private static final double percent_of_sick=0.2;
     private static final int tryContagion=3;
     private static final double tryPass=0.03;
     public static void main(String[] args) throws Exception {
-        MainWindow mainWindow= new MainWindow();
+        MainWindow.SMainWindow.start();
 //----------------Read from file-----------------------//
         SimulationFile X = new SimulationFile();
-        Map y = X.loadMap();
+        y = X.loadMap();
 
 //----------------Make random healthy people sick----------------//
         for (int i = 0; i < y.getSettlements().length; i++) {
-            makeSick(y.getSettlements()[i],sizeOfSick(y.getSettlements()[i].getResidentsNum()));
+            makeSick(y.getSettlements()[i],sizeOfSick(y.getSettlements()[i].getResidentsNum(),percent_of_sick));
         }
 //----------------------Try to contagion-------------------------------//
         for (int j = 0; j < y.getSettlements().length; j++) {
@@ -70,27 +71,30 @@ public class Main {
 
     private  static void tryCon(Settlement[] settlement){
         //** */
-        for (Settlement value : settlement) {
-            int size_of_sick = value.getSickNum();
-            for (int i = 0; i < size_of_sick; i++) {
-                Person sick_per = value.getSickPerson(i);
+        int num_of_settlements=settlement.length;
+        for (int k = 0; k <num_of_settlements ; k++) {
+            int size_of_sick = settlement[k].getSickNum();
+            for (int i = 0;  i < size_of_sick; i++)
+            {
+                Person sick_per=settlement[k].getSickPerson(i);
                 int j = tryContagion;
-                while (j > 0) {//for try to contagion const time loop
-                    Person rand_person = randPerson(value.getPeople());
-                    if (!(rand_person instanceof Sick)) {
-                        if (sick_per.getVirus().tryToContagion(sick_per, rand_person)) {
-                            Person s = rand_person.contagion();
-                            value.Update_person_status(rand_person, s);
-                        }
+                while (j >0) {//for try to contagion const time loop
+                    Person rand_person = randPerson(settlement[k].getPeople());
+                    if(!(rand_person instanceof Sick))
+                    {
+                        if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
+                            Person s=rand_person.contagion();
+                            settlement[k].Update_person_status(rand_person,s);
+                            }
                         j++;
+                        }
                     }
                 }
             }
         }
-        }
 
-    private static int sizeOfSick(int ResidentsNum) {
-        return (int) (ResidentsNum * Main.percent_of_sick);
+    private static int sizeOfSick(int ResidentsNum, double precent) {
+        return (int) (ResidentsNum * precent);
     }
 
     private static void makeSick(Settlement settlement, int size_of_sick) {
@@ -105,6 +109,23 @@ public class Main {
         int size=A_persons.size();
         int i =RandomV.GetRand(size);
         return A_persons.get(i);
+
+    }
+    private static IVirus rand_Virus() {
+
+
+        while (true) {
+            int x = RandomV.GetRand(IVirus.num_of_virus);
+            switch (x) {
+                case 0:
+                    return new ChineseVariant();
+                case 1:
+                    return new Virus.SouthAfricanVariant();
+                case 2:
+                    return new Virus.BritishVariant();
+
+            }
+        }
 
     }
 }

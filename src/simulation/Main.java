@@ -11,7 +11,7 @@ import population.Convalescent;
 import population.Person;
 import population.Sick;
 import ui.MainWindow;
-import ui.Menu;
+import ui.MenuBar;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class Main {
 
 //----------------Make random healthy people sick----------------//
         for (int i = 0; i < y.getSettlements().length; i++) {
-            makeSick(y.getSettlements()[i],sizeOfSick(y.getSettlements()[i].getResidentsNum(),percent_of_sick));
+            makeSick(y.getSettlements()[i],sizeOfSick(y.getSettlements()[i].getResidentsNum()));
         }
 //----------------------Try to contagion-------------------------------//
         for (int j = 0; j < y.getSettlements().length; j++) {
@@ -43,7 +43,7 @@ public class Main {
             {
                 Sick s= currentSettlement.getSickPerson(p);
                 if(s.DaysPastFromCont()>=25) {//need to return sick not Person{
-                    Convalescent c = s.recover();
+                    Convalescent c = (Convalescent) s.recover();
                     currentSettlement.Update_person_status(s,c);
                 }
             }
@@ -70,36 +70,33 @@ public class Main {
 
     private  static void tryCon(Settlement[] settlement){
         //** */
-        int num_of_settlements=settlement.length;
-        for (int k = 0; k <num_of_settlements ; k++) {
-            int size_of_sick = settlement[k].getSickNum();
-            for (int i = 0;  i < size_of_sick; i++)
-            {
-                Person sick_per=settlement[k].getSickPerson(i);
+        for (Settlement value : settlement) {
+            int size_of_sick = value.getSickNum();
+            for (int i = 0; i < size_of_sick; i++) {
+                Person sick_per = value.getSickPerson(i);
                 int j = tryContagion;
-                while (j >0) {//for try to contagion const time loop
-                    Person rand_person = randPerson(settlement[k].getPeople());
-                    if(!(rand_person instanceof Sick))
-                    {
-                        if (sick_per.getVirus().tryToContagion(sick_per, rand_person)==true) {
-                            Person s=rand_person.contagion();
-                            settlement[k].Update_person_status(rand_person,s);
-                            }
-                        j++;
+                while (j > 0) {//for try to contagion const time loop
+                    Person rand_person = randPerson(value.getPeople());
+                    if (!(rand_person instanceof Sick)) {
+                        if (sick_per.getVirus().tryToContagion(sick_per, rand_person)) {
+                            Person s = rand_person.contagion();
+                            value.Update_person_status(rand_person, s);
                         }
+                        j++;
                     }
                 }
             }
         }
+        }
 
-    private static int sizeOfSick(int ResidentsNum, double precent) {
-        return (int) (ResidentsNum * precent);
+    private static int sizeOfSick(int ResidentsNum) {
+        return (int) (ResidentsNum * Main.percent_of_sick);
     }
 
     private static void makeSick(Settlement settlement, int size_of_sick) {
 
         for (int i = 0; i < size_of_sick;i++ ) {
-            Person exists_per = randPerson( settlement.getH_people());
+            Person exists_per = randPerson( settlement.get_not_sick_people());
             settlement.Update_person_status(exists_per, exists_per.contagion());
         }
     }
@@ -108,23 +105,6 @@ public class Main {
         int size=A_persons.size();
         int i =RandomV.GetRand(size);
         return A_persons.get(i);
-
-    }
-    private static IVirus rand_Virus() {
-
-
-        while (true) {
-            int x = RandomV.GetRand(IVirus.num_of_virus);
-            switch (x) {
-                case 0:
-                    return new ChineseVariant();
-                case 1:
-                    return new Virus.SouthAfricanVariant();
-                case 2:
-                    return new Virus.BritishVariant();
-
-            }
-        }
 
     }
 }

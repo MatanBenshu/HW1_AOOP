@@ -45,6 +45,8 @@ public class Settlement {
     public String getName() {
         return new String(this.name);
     }
+    public String getColor(){return this.ramzorcolor.toString();}
+    public int getVaccineNum(){return this.vaccine_num; }
     public Location getLocation() {
         return location;
     }

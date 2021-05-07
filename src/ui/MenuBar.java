@@ -14,8 +14,8 @@ public class MenuBar extends JMenuBar {
     private JMenu file;
     private JMenu simulation;
     private JMenu help;
-    public static boolean load =false;
-
+   private JMenuItem Load=new JMenuItem("Load");
+   private JMenuItem statistics=new JMenuItem("Statistics");
     public MenuBar(){
 
         file = new JMenu("File");
@@ -24,11 +24,12 @@ public class MenuBar extends JMenuBar {
         this.add(file);
         this.add(simulation);
         this.add(help);
-        JMenuItem Load=new JMenuItem("Load");
+
         Load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(MainWindow.SMainWindow.sim_is_stop == true){
+
                 JFileChooser fileChooser = new JFileChooser();
                int response = fileChooser.showOpenDialog(null);
                if(response == JFileChooser.APPROVE_OPTION) {
@@ -44,8 +45,10 @@ public class MenuBar extends JMenuBar {
                    } catch (Exception exception) {
                        exception.printStackTrace();
                    }
-                MainWindow.SMainWindow.set_map(new MapPanel());
 
+                MainWindow.SMainWindow.set_map(new MapPanel());
+                   Load.setEnabled(false);
+                    statistics.setEnabled(true);
                }
                }
                 else{
@@ -53,11 +56,16 @@ public class MenuBar extends JMenuBar {
                 }
             }
         });
-        JMenuItem statistics=new JMenuItem("Statistics");
+
+
+        statistics.setEnabled(false);
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StatisticsDialog dialog =new StatisticsDialog();
+
+                    StatisticsDialog dialog = new StatisticsDialog();
+
+
             }
         });
 

@@ -185,6 +185,10 @@ public class Settlement {
             return true;
         return false;
     }
+
+    public void setName(String aValue) {
+        this.name=aValue;
+    }
 //----------end of public methods---------
 
 

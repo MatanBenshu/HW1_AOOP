@@ -1,40 +1,87 @@
 package ui;
 
-import country.Map;
 import country.Settlement;
+import country.SettlementData;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableRowSorter;
-import java.awt.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
 
-public class StaticTable  {
-    private enum colname {
-        Name(0),Type(1),Ramzor_Color(2),SickPercent(3),VaccinesGiven(4),NumberofDeceased(5),NumberofPeople(6);
+//
+public class StaticTable extends JTable {
+//    private static class Student {
+//        private String id, name;
+//        private int age;
+//        private boolean drivingLicense;
+//
+//        public Student(String id, String name, int age, boolean drivingLicense) {
+//            this.id = id;
+//            this.name = name;
+//            this.age = age;
+//            this.drivingLicense = drivingLicense;
+//        }
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public int getAge() {
+//            return age;
+//        }
+//
+//        public boolean isDrivingLicense() {
+//            return drivingLicense;
+//        }
+//
+//        public void setId(String id) {
+//            this.id = id;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public void setAge(int age) {
+//            this.age = age;
+//        }
+//
+//        public void setDrivingLicense(boolean drivingLicense) {
+//            this.drivingLicense = drivingLicense;
+//        }
+//    }
+//
+//    private static class Course {
+//        private Student[] students;
+//
+//        public Course(Student[] students) {
+//            this.students = students;
+//        }
+//
+//        public int size() {
+//            return students.length;
+//        }
+//
+//        public Student at(int index) {
+//            return students[index];
+//        }
+//    }
 
-        private final int num;
-         private colname( final int num){
-            this.num=num;
-        }
-        public final int getnum(){
-            return  this.num;
-        }
-    }
-    private static class MapModel extends AbstractTableModel
-    {
+    private static class SettelementModel extends AbstractTableModel {
+        private SettlementData data;
+        private final String[] columnNames = {"index","res size", "Name", "precent of sick", "Ramzor"};
 
-        private Map data;
-        private final String[] columnNames = {"Name","Type","Ramzor Color","Sick Percent","Vaccines Given","Number of Deceased","Number of People"};;
-
-        public MapModel(Map data) {
+        public SettelementModel(SettlementData data) {
             this.data = data;
         }
 
+
         @Override
         public int getRowCount() {
-            return data.getSettlements().length;
+            return data.size();
         }
 
         @Override
@@ -44,16 +91,18 @@ public class StaticTable  {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Settlement settlement = data.getSettlements()[rowIndex];
-
+            Settlement settlement = data.at(rowIndex);
             switch (columnIndex) {
-                case 0: return settlement.getName();
-                case 1: return settlement.SettlementType();
-                case 2: return settlement.getVaccineNum();
-                case 3: return settlement.contagiousPercent();
-                case 4:return settlement.getResidentsNum();
-                case 5:return null;
-                case 6:return settlement.calculateRamzorGrade().getColored();
+                case 0:
+                    return rowIndex;
+                case 1:
+                    return settlement.getResidentsNum();
+                case 2:
+                    return settlement.getName();
+                case 3:
+                    return settlement.contagiousPercent();
+                case 4:
+                    return settlement.calculateRamzorGrade().getColorName();
             }
             return null;
         }
@@ -73,42 +122,57 @@ public class StaticTable  {
             return columnIndex > 0;
         }
 
-//        @Override
-//        public void setValueAt(Object aValue, int row, int col) {
-//            Settlement student = data.at(row);
-//            switch (col) {
-//                case 1: student.setName((String) aValue); break;
-//                case 2: student.setAge((Integer) aValue); break;
-//                case 3: student.setDrivingLicense((Boolean) aValue); break;
-//            }
-//            fireTableCellUpdated(row, col);
-//        }
+       @Override
+        public void setValueAt(Object aValue, int row, int col) {
+           Settlement settlement = data.at(row);
+           switch (col) {
+               case 1: settlement.setName((String) aValue); break;
+
+           }
+           fireTableCellUpdated(row, col);
+        }
     }
 
-    private TableRowSorter<MapModel> sorter;
+    private JDialog dialog;
+    private TableRowSorter<SettelementModel> sorter;
     private JTextField tbFilterText;
+    private SettelementModel model;
+    private SettlementData settlementData;
 
-    public StaticTable(Map map,JDialog dialog) {
+    public StaticTable(SettlementData settlementData, JDialog dialog,JTextField tbFText) {
+        this.dialog=dialog;
+        this.settlementData=settlementData;
+        this.model=new SettelementModel(settlementData);
+        this.setModel(model);
+        this.tbFilterText=tbFText;
 
-
-        MapModel model = new MapModel(map);
         JTable table = new JTable(model);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(true);
-        table.setRowSorter(sorter = new TableRowSorter<MapModel>(model));
-        dialog.add(new JScrollPane(table),BorderLayout.CENTER);
-
-       dialog.add(tbFilterText = new JTextField(),BorderLayout.CENTER);
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.setFillsViewportHeight(true);
+        this.setRowSorter(sorter = new TableRowSorter<SettelementModel>(model));
+        dialog.add(new JScrollPane(table));
         tbFilterText.setToolTipText("Filter Name Column");
         tbFilterText.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { newFilter(); }
-            public void removeUpdate(DocumentEvent e) { newFilter(); }
-            public void changedUpdate(DocumentEvent e) { newFilter(); }
+            public void insertUpdate(DocumentEvent e) {
+                newFilter();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                newFilter();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                newFilter();
+            }
         });
 
         dialog.pack();
-        table.setVisible(true);
+        this.setRowSelectionAllowed(true);
+           this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+           this.setColumnSelectionAllowed(false);
+
+        dialog.setVisible(true);
+
 
     }
 
@@ -119,5 +183,22 @@ public class StaticTable  {
             // If current expression doesn't parse, don't update.
         }
     }
+    public Settlement getSettlementInRow(int index){
 
+       return  settlementData.at(index);
+    }
+    private void  setRowSelect(){
+
+        ListSelectionModel model_u= (ListSelectionModel) this.getModel();
+
+        model_u.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+             int index =  model_u.getMinSelectionIndex();
+            }
+        });
+
+    }
 }
+
+

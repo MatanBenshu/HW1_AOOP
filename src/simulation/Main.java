@@ -93,7 +93,7 @@ public class Main {
         return (int) (ResidentsNum * Main.percent_of_sick);
     }
 
-    private static void makeSick(Settlement settlement, int size_of_sick) {
+    public static void makeSick(Settlement settlement, int size_of_sick) {
 
         for (int i = 0; i < size_of_sick;i++ ) {
             Person exists_per = randPerson( settlement.get_not_sick_people());

@@ -3,15 +3,12 @@
 
 package simulation;
 import IO.SimulationFile;
-import Virus.ChineseVariant;
-import Virus.IVirus;
 import country.Map;
 import country.Settlement;
 import population.Convalescent;
 import population.Person;
 import population.Sick;
-import ui.MainWindow;
-import ui.MenuBar;
+import ui.RamzorMainWindow;
 
 import java.util.ArrayList;
 
@@ -22,7 +19,7 @@ public class Main {
     private static final int tryContagion=3;
     private static final double tryPass=0.03;
     public static void main(String[] args) throws Exception {
-        MainWindow.SMainWindow.start();
+       RamzorMainWindow window= new RamzorMainWindow();
 //----------------Read from file-----------------------//
         SimulationFile X = new SimulationFile();
         Map y = X.loadMap();

@@ -3,22 +3,21 @@ package ui;
 
 import IO.SimulationFile;
 import country.Map;
-import simulation.Main;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuBar extends JMenuBar {
     private Map mapfile;
+    private RamzorMainWindow mainWindow;
     private JMenu file;
     private JMenu simulation;
     private JMenu help;
    private JMenuItem Load=new JMenuItem("Load");
    private JMenuItem statistics=new JMenuItem("Statistics");
-    public MenuBar(){
-
+    public MenuBar(RamzorMainWindow main_window){
+        this.mainWindow=main_window;
         file = new JMenu("File");
         simulation = new JMenu("Simulation");
         help = new JMenu("help");
@@ -29,7 +28,7 @@ public class MenuBar extends JMenuBar {
         Load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainWindow.SMainWindow.sim_is_stop == true){
+                if(main_window.sim_is_stop == true){
 
                 JFileChooser fileChooser = new JFileChooser();
                int response = fileChooser.showOpenDialog(null);
@@ -47,7 +46,7 @@ public class MenuBar extends JMenuBar {
                        exception.printStackTrace();
                    }
 
-                MainWindow.SMainWindow.set_map(new MapPanel(mapfile));
+                main_window.set_map(new MapPanel(mapfile));
                    Load.setEnabled(false);
                     statistics.setEnabled(true);
                }
@@ -64,7 +63,7 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                    StatisticsDialog dialog = new StatisticsDialog(mapfile);
+                    StatisticsDialog dialog = new StatisticsDialog(mapfile,main_window);
 
 
             }
@@ -89,9 +88,9 @@ public class MenuBar extends JMenuBar {
         play_item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainWindow.SMainWindow.sim_is_stop ==true &&MainWindow.SMainWindow.sim_is_pause==true){
-                    MainWindow.SMainWindow.sim_is_stop = false;
-                    MainWindow.SMainWindow.sim_is_pause = false;
+                if(main_window.sim_is_stop ==true && mainWindow.sim_is_pause==true){
+                    main_window.sim_is_stop = false;
+                    main_window.sim_is_pause = false;
                     //start sim here
 
 
@@ -104,7 +103,7 @@ public class MenuBar extends JMenuBar {
         pause_item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainWindow.SMainWindow.sim_is_pause == false)
+                if(main_window.sim_is_pause == false)
                 {
                 //puse sim here
 
@@ -122,7 +121,7 @@ public class MenuBar extends JMenuBar {
         help_item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog help_dialog = new JDialog(MainWindow.SMainWindow.getWindowAddres(), "Help",true);
+                JDialog help_dialog = new JDialog(main_window.getWindowAddres(), "Help",true);
                 help_dialog.setBounds(0,0,500,500);
                 JTextArea text = new JTextArea();
                 text.setText("menu bar option:\n" +
@@ -145,7 +144,7 @@ public class MenuBar extends JMenuBar {
         about_item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog about_dialog = new JDialog(MainWindow.SMainWindow.getWindowAddres(), "About",false);
+                JDialog about_dialog = new JDialog(main_window.getWindowAddres(), "About",false);
                 about_dialog.setBounds(0,0,500,500);
                 JTextArea text = new JTextArea();
                 text.setText("this program ");

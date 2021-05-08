@@ -24,9 +24,9 @@ public class StatisticsDialog extends JDialog  {
         private JButton vaccinate = new JButton("Vaccinate");
         private String[] columns_title;
 
-    public StatisticsDialog(Map mapfile){
+    public StatisticsDialog(Map mapfile,RamzorMainWindow mainwindow){
 
-        super(MainWindow.SMainWindow.getWindowAddres(),"Statistics Window",false);
+        super(mainwindow.getWindowAddres(),"Statistics Window",false);
         this.mapfile=mapfile;
         this.setBounds(0,0,800,500);
         this.north_panel.setLayout(new BoxLayout(north_panel,BoxLayout.LINE_AXIS));
@@ -78,7 +78,7 @@ public class StatisticsDialog extends JDialog  {
                 Settlement settle = stats_table.getSettlementInRow(1);
                     Main.makeSick(settle, Main.sizeOfSick(settle.getResidentsNum()));
                     stats_table.Update(stats_table);
-                 MainWindow.SMainWindow.UpdateMap(settle);
+                mainwindow.UpdateMap(settle);
 
 
 

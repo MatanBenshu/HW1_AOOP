@@ -4,21 +4,20 @@ import country.Settlement;
 import javax.swing.*;
 import java.awt.*;
 
-public  class MainWindow {
+public  class RamzorMainWindow {
 
 
-    public static class SMainWindow {
-        private static JFrame main_window = new JFrame();
-        private static MenuBar menu_bar = new MenuBar();
-        private static MapPanel map_panel =new MapPanel(null);
-        private static SpeedSlider speed_slider = new SpeedSlider(0, 10);
 
+        private  JFrame main_window = new JFrame();
+        private  MapPanel map_panel =new MapPanel(null);
+        private  SpeedSlider speed_slider = new SpeedSlider(0, 10);
+    private  MenuBar menu_bar;
         static boolean sim_is_pause = true;
         static boolean sim_is_stop = true;
 
 
-        static public void start() {
-
+         public  RamzorMainWindow() {
+             menu_bar = new MenuBar(this);
             main_window.setTitle("Main Window");
             main_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             main_window.setJMenuBar(menu_bar);
@@ -30,24 +29,24 @@ public  class MainWindow {
 
         }
 
-        static public void set_map(MapPanel map) {
-            map_panel.setVisible(false);
-            main_window.remove(map_panel);
+         public void set_map(MapPanel map) {
+            this.map_panel.setVisible(false);
+            this.main_window.remove(map_panel);
             main_window.add(map, BorderLayout.CENTER);
             map_panel = map;
             map_panel.setVisible(true);
 
         }
 
-        static public JFrame getWindowAddres() {
+        public JFrame getWindowAddres() {
             return main_window;
         }
 
-        public static void UpdateMap(Settlement settle) {
+        public  void UpdateMap(Settlement settle) {
             map_panel.ColorUpdate(settle);
         }
     }
-}
+
 
 
 

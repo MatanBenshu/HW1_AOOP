@@ -64,8 +64,6 @@ public class MenuBar extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
 
                     StatisticsDialog dialog = new StatisticsDialog(mapfile,main_window);
-
-
             }
         });
 

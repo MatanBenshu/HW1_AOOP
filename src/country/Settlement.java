@@ -191,8 +191,8 @@ public class Settlement {
         this.name=aValue;
     }
 
-    public void setVaccine_num(int vaccine_num) {
-        this.vaccine_num = vaccine_num;
+    public void addVaccine_num(int vaccine_num) {
+        this.vaccine_num = this.vaccine_num+vaccine_num;
     }
     //----------end of public methods---------
 

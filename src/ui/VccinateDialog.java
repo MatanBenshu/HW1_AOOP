@@ -19,16 +19,18 @@ public class VccinateDialog extends JDialog {
         this.setResizable(false);
         this.pack();
         this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.LINE_AXIS));
-
+        JDialog dialog=this;
         add_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int num;
-                String text_string = textField.toString();
+                String text_string = textField.getText();
                     num= Integer.parseInt(text_string);
-                   Settlement settlement= main_dialog.getStats_table().getSettlementInRow();
-                   settlement.setVaccine_num(num);
-                   main_dialog.Update();
+                   Settlement settlement;
+                settlement = main_dialog.getStats_table().getSettlementInRow();
+                settlement.addVaccine_num(num);
+                   main_dialog.getStats_table().Update(main_dialog.getStats_table());
+                   dialog.setVisible(false);
 
             }
         });

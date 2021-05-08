@@ -2,15 +2,10 @@ package ui;
 
 import country.Settlement;
 import country.SettlementData;
-import jdk.jfr.Event;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 //
 public class StaticTable extends JTable {
@@ -61,7 +56,8 @@ public class StaticTable extends JTable {
 
         @Override
         public String getColumnName(int column) {
-            return columnNames[column];
+
+                return columnNames[column];
         }
 
         @Override
@@ -83,6 +79,10 @@ public class StaticTable extends JTable {
             }
             fireTableCellUpdated(row, col);
         }
+
+        public String[] getColumnNames() {
+            return columnNames;
+        }
     }
     private int row_index;
     private StatisticsDialog dialog;
@@ -91,7 +91,7 @@ public class StaticTable extends JTable {
     private SettelementModel model;
     private SettlementData settlementData;
 
-    public StaticTable(SettlementData settlementData, StatisticsDialog dialog,JTextField tbFText) {
+    public StaticTable(SettlementData settlementData, StatisticsDialog dialog, JTextField tbFText) {
         this.dialog=dialog;
         this.settlementData=settlementData;
         this.model=new SettelementModel(settlementData);
@@ -126,7 +126,8 @@ public class StaticTable extends JTable {
         this.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
 
-               row_index= table.getSelectedRow();
+                row_index= table.getSelectedRow();
+                System.out.println(row_index);
             }
         });
         dialog.setVisible(true);
@@ -147,4 +148,10 @@ public class StaticTable extends JTable {
     }
 
     public void Update(StaticTable ref){ref= new StaticTable(settlementData,dialog,tbFilterText);}
+    public String[]  getColNames(){return model.getColumnNames();}
+    public void SortTableby(int col_index){
+        this.sorter.toggleSortOrder(col_index);
+        this.Update(this);
+
+    }
 }

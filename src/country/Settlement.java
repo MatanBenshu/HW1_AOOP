@@ -60,6 +60,7 @@ public class Settlement {
     public int getHealthNum(){return this.not_sick_people.size();}
     public ArrayList<Settlement> getPassages(){return this.Related_settlements;}
     public String SettlementType(){return null;}
+    public int PopulationSize(){return this.people.size();}
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;
@@ -189,7 +190,11 @@ public class Settlement {
     public void setName(String aValue) {
         this.name=aValue;
     }
-//----------end of public methods---------
+
+    public void setVaccine_num(int vaccine_num) {
+        this.vaccine_num = vaccine_num;
+    }
+    //----------end of public methods---------
 
 
     ////----------start of private methods------------------

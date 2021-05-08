@@ -1,14 +1,17 @@
 package ui;
 
+import IO.StatisticsFile;
 import country.Map;
 import country.Settlement;
 import country.SettlementData;
 import simulation.Main;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class StatisticsDialog extends JDialog  {
     private  Map mapfile;
@@ -22,7 +25,7 @@ public class StatisticsDialog extends JDialog  {
         private JButton save_button = new JButton("Save");
         private JButton add_sick = new JButton("Add Sick");
         private JButton vaccinate = new JButton("Vaccinate");
-        private String[] columns_title;
+
 
     public StatisticsDialog(Map mapfile,RamzorMainWindow mainwindow){
 
@@ -61,7 +64,11 @@ public class StatisticsDialog extends JDialog  {
         save_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //code of saving file with help of StatisticsFile class in package io.
+               JFileChooser savefile =new JFileChooser();
+
+               savefile.showSaveDialog(null);
+              StatisticsFile.CSV(mapfile,savefile.getSelectedFile());
+
 
             }
         });
@@ -69,18 +76,19 @@ public class StatisticsDialog extends JDialog  {
         add_sick.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //add 0.01 sick
-//                int row=stats_table.getSelectedRow();;
-//                if(row==-1){
-//
-//                TableError();
-//                }
-                Settlement settle = stats_table.getSettlementInRow(1);
+
+                Settlement settle = stats_table.getSettlementInRow();
                     Main.makeSick(settle, Main.sizeOfSick(settle.getResidentsNum()));
                     stats_table.Update(stats_table);
-                mainwindow.UpdateMap(settle);
+                 mainwindow.UpdateMap(settle);
+            }
+        });
+        StatisticsDialog dialog=this;
+        vaccinate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-
+                new VccinateDialog(dialog,mapfile);
 
 
             }
@@ -98,6 +106,10 @@ public class StatisticsDialog extends JDialog  {
 
     public String getUser_string() {
         return user_string;
+    }
+
+    public StaticTable getStats_table() {
+        return stats_table;
     }
 
     public void TableError ()

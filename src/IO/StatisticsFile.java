@@ -1,12 +1,17 @@
 package IO;
 import country.*;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class StatisticsFile {
-    public static void CSV(Map origMap) {
-        try (PrintWriter writer = new PrintWriter(new File("test.csv"))) {
+    public static void CSV(Map origMap,File file) {
+
+        String s=file.getParent()+"\\table.csv";
+        File f=new File(s);
+        try (PrintWriter writer = new PrintWriter(s)) {
             StringBuilder sb = new StringBuilder();
             sb.append("City/Kibbutz/Moshav");
             sb.append(',');
@@ -41,12 +46,12 @@ public class StatisticsFile {
                     sb.append(',');
                 }
                 sb.append(settlements[i].getName());
-                sb.append(',');
+               sb.append(',');
 
                 sb.append(settlements[i].getPeople().size());
                 sb.append(',');
 
-                sb.append(settlements[i].getColor());
+                sb.append(settlements[i].calculateRamzorGrade().getColorName());
                 sb.append(',');
 
                 sb.append(settlements[i].getVaccineNum());
@@ -59,6 +64,7 @@ public class StatisticsFile {
                 sb.append('\n');
             }
             writer.write(sb.toString());
+
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }

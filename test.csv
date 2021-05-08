@@ -1,0 +1,4 @@
+City/Kibbutz/Moshav,Settlement Name,Population,Ramzor Color,Vaccines Available,Healthy People,Sick People
+City,Ashdod,100,RamzorColor{value=0.4, color='Green'},0,100,0
+City,Beer-Sheva,100,RamzorColor{value=0.4, color='Green'},0,78,22
+Moshav,Gevim,100,RamzorColor{value=0.4, color='Green'},0,100,0

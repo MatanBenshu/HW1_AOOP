@@ -33,7 +33,7 @@ public class SimulationFile {
         ArrayList<Settlement> settlements= new ArrayList<Settlement>();//for size of settlements array
         ArrayList<String> hashtags= new ArrayList<String>();
         String s1 = br.readLine();
-        while (s1!=null) {
+        while (s1!=null&&s1.length()>0) {
             if (s1.charAt(0)==('#'))
             {
                 hashtags.add(s1);

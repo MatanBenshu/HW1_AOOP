@@ -2,6 +2,7 @@ package ui;
 
 
 import IO.SimulationFile;
+import country.Map;
 import simulation.Main;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuBar extends JMenuBar {
-
+    private Map mapfile;
     private JMenu file;
     private JMenu simulation;
     private JMenu help;
@@ -34,19 +35,19 @@ public class MenuBar extends JMenuBar {
                int response = fileChooser.showOpenDialog(null);
                if(response == JFileChooser.APPROVE_OPTION) {
                    SimulationFile.file = fileChooser.getSelectedFile().getAbsolutePath();
-                   SimulationFile X = null;
+                   SimulationFile file = null;
                    try {
-                       X = new SimulationFile();
+                       file = new SimulationFile();
                    } catch (Exception exception) {
                        exception.printStackTrace();
                    }
                    try {
-                       Main.y = X.loadMap();
+                       mapfile = file.loadMap();
                    } catch (Exception exception) {
                        exception.printStackTrace();
                    }
 
-                MainWindow.SMainWindow.set_map(new MapPanel());
+                MainWindow.SMainWindow.set_map(new MapPanel(mapfile));
                    Load.setEnabled(false);
                     statistics.setEnabled(true);
                }
@@ -63,7 +64,7 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                    StatisticsDialog dialog = new StatisticsDialog();
+                    StatisticsDialog dialog = new StatisticsDialog(mapfile);
 
 
             }

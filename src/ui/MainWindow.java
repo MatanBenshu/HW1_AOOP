@@ -10,7 +10,7 @@ public  class MainWindow {
     public static class SMainWindow {
         private static JFrame main_window = new JFrame();
         private static MenuBar menu_bar = new MenuBar();
-        private static JPanel map_panel = new JPanel();
+        private static MapPanel map_panel =new MapPanel(null);
         private static SpeedSlider speed_slider = new SpeedSlider(0, 10);
 
         static boolean sim_is_pause = true;
@@ -41,6 +41,10 @@ public  class MainWindow {
 
         static public JFrame getWindowAddres() {
             return main_window;
+        }
+
+        public static void UpdateMap(Settlement settle) {
+            map_panel.ColorUpdate(settle);
         }
     }
 }

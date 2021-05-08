@@ -199,6 +199,7 @@ public class StaticTable extends JTable {
         });
 
     }
+        public void Update(StaticTable ref){ref= new StaticTable(settlementData,dialog,tbFilterText);}
 }
 
 

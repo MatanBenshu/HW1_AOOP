@@ -17,15 +17,15 @@ import java.util.ArrayList;
 
 
 public class Main {
-    public static Map y;
-    private static final double percent_of_sick=0.2;
+
+    private static final double percent_of_sick=0.01;
     private static final int tryContagion=3;
     private static final double tryPass=0.03;
     public static void main(String[] args) throws Exception {
         MainWindow.SMainWindow.start();
 //----------------Read from file-----------------------//
         SimulationFile X = new SimulationFile();
-        y = X.loadMap();
+        Map y = X.loadMap();
 
 //----------------Make random healthy people sick----------------//
         for (int i = 0; i < y.getSettlements().length; i++) {
@@ -89,7 +89,7 @@ public class Main {
         }
         }
 
-    private static int sizeOfSick(int ResidentsNum) {
+    public static int sizeOfSick(int ResidentsNum) {
         return (int) (ResidentsNum * Main.percent_of_sick);
     }
 

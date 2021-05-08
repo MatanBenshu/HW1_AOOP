@@ -11,15 +11,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MapPanel extends JPanel  {
-
-         public  MapPanel(){
+   private Graphics graphics;
+   private Map map;
+         public  MapPanel(Map map){
              this.setBackground(Color.white);
+             this.map=map;
          }
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if(Main.y.getSettlements()!=null){
-                Settlement[] settlement= Main.y.getSettlements();
+            this.graphics=g;
+            if(map==null)return;
+            if(map!=null){
+                Settlement[] settlement= map.getSettlements();
                 Settlement sett ;
 
                 for (int i = 0; i <settlement.length ; i++) {
@@ -59,6 +63,15 @@ public class MapPanel extends JPanel  {
 
     }
 
+public void ColorUpdate(Settlement settlement){
+    int x=settlement.getLocation().getPosition().getX();
+    int y=settlement.getLocation().getPosition().getY();
+    int width=settlement.getLocation().getSize().getWidth();
+    int height=settlement.getLocation().getSize().getHeight();
+    this.graphics.setColor(settlement.calculateRamzorGrade().getColored());
+    this.graphics.fillRect(x,y , width, height);
+    this.setVisible(false);this.setVisible(true);
 
+}
 
 }

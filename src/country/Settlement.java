@@ -156,7 +156,7 @@ public class Settlement {
             if(vaccine_num>0){
                 if(not_sick_people.get(i) instanceof Healthy){
                     Healthy healthy=(Healthy) not_sick_people.get(i);
-                    Vaccinated vac=new Vaccinated(healthy.getAge(),healthy.getLocation(),healthy.getSettlement(), Simulation.Clock.now());
+                    Vaccinated vac = healthy.vaccinate();
                     Update_person_status(healthy,vac);
                     vaccine_num--;
                 }

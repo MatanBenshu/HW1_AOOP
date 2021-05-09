@@ -20,8 +20,8 @@ public class Healthy extends Person{
     //end of constrctor/////////
 
     //public methods
-    public Person vaccinate(){
-        Person vac_P = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
+    public Vaccinated vaccinate(){
+        Vaccinated vac_P = new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(), Simulation.Clock.now());
         return vac_P;
     }
 

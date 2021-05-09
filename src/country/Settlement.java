@@ -186,6 +186,10 @@ public class Settlement {
     public void addVaccine_num(int vaccine_num) {
         this.vaccine_num = this.vaccine_num+vaccine_num;
     }
+
+    public int PopulationSize() {
+        return this.people.size();
+    }
     //----------end of public methods---------
 
 

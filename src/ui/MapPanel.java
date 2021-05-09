@@ -5,14 +5,19 @@ import country.Settlement;
 import simulation.Main;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class MapPanel extends JPanel  {
    private Graphics graphics;
    private Map map;
+   private ArrayList<Shape> shapeArrayList=new ArrayList<Shape>();
+
          public  MapPanel(Map map){
              this.setBackground(Color.white);
              this.map=map;
@@ -51,6 +56,7 @@ public class MapPanel extends JPanel  {
                int width=sett.getLocation().getSize().getWidth();
                int height=sett.getLocation().getSize().getHeight();
                g.setColor(Color.black);
+               shapeArrayList.add(new Rectangle2D.Double(x,y,width,height));
                 g.drawRect(x,y , width, height);
                 g.setColor(sett.calculateRamzorGrade().getColored());
                 g.fillRect(x,y , width, height);
@@ -70,7 +76,30 @@ public void ColorUpdate(Settlement settlement){
     int height=settlement.getLocation().getSize().getHeight();
     this.graphics.setColor(settlement.calculateRamzorGrade().getColored());
     this.graphics.fillRect(x,y , width, height);
-    this.setVisible(false);this.setVisible(true);
+    this.repaint();
+//    this.setVisible(false);this.setVisible(true);
+
+}
+public void OpenByPress(StatisticsDialog dialog){
+
+             this.addMouseListener(new MouseInputAdapter() {
+                 @Override
+                 public void mouseClicked(MouseEvent e) {
+                     super.mouseClicked(e);
+                    Point clicked_point=  e.getPoint();
+                     for (int i = 0; i <shapeArrayList.size() ; i++) {
+                         if(shapeArrayList.get(i).contains(clicked_point)==true){
+                           Settlement sett=map.getSettlements()[i];
+                             dialog.getStats_table().setRowSelectionInterval(i,i);
+                             dialog.setVisible(true);
+
+
+                         }
+                     }
+                 }
+             });
+
+
 
 }
 

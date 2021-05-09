@@ -118,7 +118,7 @@ public class StaticTable extends JTable {
             }
         });
 
-        dialog.pack();
+//        dialog.pack();
         this.setRowSelectionAllowed(true);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setColumnSelectionAllowed(false);
@@ -152,6 +152,11 @@ public class StaticTable extends JTable {
     public void SortTableby(int col_index){
         this.sorter.toggleSortOrder(col_index);
         this.Update(this);
+
+    }
+
+    private  enum ColToFilter{
+
 
     }
 }

@@ -18,11 +18,15 @@ public class Main {
     private static final double percent_of_sick=0.01;
     private static final int tryContagion=3;
     private static final double tryPass=0.03;
+    private static  RamzorMainWindow window;
     public static void main(String[] args) throws Exception {
-       RamzorMainWindow window= new RamzorMainWindow();
-//----------------Read from file-----------------------//
-        SimulationFile X = new SimulationFile();
-        Map y = X.loadMap();
+     window= new RamzorMainWindow();
+
+
+    }
+    public static void StartSim(){
+        //----------------Read from file-----------------------//
+             Map y =window.getMapFile();
 
 //----------------Make random healthy people sick----------------//
         for (int i = 0; i < y.getSettlements().length; i++) {
@@ -30,8 +34,8 @@ public class Main {
         }
 //----------------------Try to contagion-------------------------------//
         for (int j = 0; j < y.getSettlements().length; j++) {
-                tryCon(y.getSettlements());
-                System.out.println(y.getSettlements()[1]);
+            tryCon(y.getSettlements());
+            System.out.println(y.getSettlements()[1]);
             System.out.println(y.getSettlements()[1].contagiousPercent());
         }
 //-----------------------After 25 days sick is convalescent---------//
@@ -51,18 +55,24 @@ public class Main {
         for(int i=0;i<y.getSettlements().length;i++){
             Settlement currentSettlement=y.getSettlements()[i];
             int numOfPasses=(int)(currentSettlement.getResidentsNum()*tryPass);
-            for(int j=0;j<numOfPasses;j++){
-                Person p= randPerson(currentSettlement.getPeople());
-                Settlement passTo= currentSettlement.getPassages().get(RandomV.GetRand(currentSettlement.getPassages().size()));
-                boolean passed=currentSettlement.transferPerson(p,passTo);
-                System.out.print("Person "+p+"transfer to: "+passTo.getName()+ "status= "+passed);
+            if(currentSettlement.getPassages().size()!=0){
+            for(int j=0;j<numOfPasses;j++) {
+                Person p = randPerson(currentSettlement.getPeople());
+                Settlement passTo = currentSettlement.getPassages().get(RandomV.GetRand(currentSettlement.getPassages().size()));
+                boolean passed = currentSettlement.transferPerson(p, passTo);
+                System.out.print("Person " + p + "transfer to: " + passTo.getName() + "status= " + passed);
+                }
             }
         }
 //------------------Vaccine shot----------------------//
         for (int i=0;i<y.getSettlements().length;i++)
             y.getSettlements()[i].giveVaccines();
-    }
 
+        for (int i = 0; i <y.getSettlements().length ; i++) {
+            window.UpdateMap(y.getSettlements()[i]);
+        }
+
+    }
 
 
     private  static void tryCon(Settlement[] settlement){
@@ -79,7 +89,7 @@ public class Main {
                             Person s = rand_person.contagion();
                             value.Update_person_status(rand_person, s);
                         }
-                        j++;
+                        j--;
                     }
                 }
             }

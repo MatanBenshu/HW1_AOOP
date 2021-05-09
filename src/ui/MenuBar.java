@@ -5,8 +5,11 @@ import IO.SimulationFile;
 import country.Map;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class MenuBar extends JMenuBar {
     private Map mapfile;
@@ -14,6 +17,7 @@ public class MenuBar extends JMenuBar {
     private JMenu file;
     private JMenu simulation;
     private JMenu help;
+    private JMenu edit_mutations;
    private JMenuItem Load=new JMenuItem("Load");
    private JMenuItem statistics=new JMenuItem("Statistics");
     public MenuBar(RamzorMainWindow main_window){
@@ -70,6 +74,12 @@ public class MenuBar extends JMenuBar {
 
 
         JMenuItem edit_mutations=new JMenuItem("Edit Mutations");
+        edit_mutations.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editMutatations();
+            }
+        });
         JMenuItem exit=new JMenuItem("exit");
 
        exit.addActionListener(new ActionListener() {
@@ -150,6 +160,34 @@ public class MenuBar extends JMenuBar {
         });
 
     }
+    private static void editMutatations() {
+
+        JFrame f = new JFrame();
+        String colum[] = {"British", "Chinese", "SouthAfrica"};
+        JPanel panel = new JPanel();
+        Object[][] data = {{false, false, false}, {false, false, false}, {false, false, false}};
+        MutationsTable MOD = new MutationsTable(data, colum);
+        JTable table = new JTable(MOD);
+        table.setFillsViewportHeight(true);
+        panel.add(new RowedTableScroll(table, colum));
+        JDialog d = new JDialog(f, "Mutations Window", true);
+        MOD.addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+                //-----------------------to do--------------
+                System.out.println("good");
+                // your code goes here, whatever you want to do when something changes in the table
+            }
+        });
+
+
+
+
+        d.add(panel);
+        d.pack();
+        d.setVisible(true);
+
+    }
+
 
 
 }

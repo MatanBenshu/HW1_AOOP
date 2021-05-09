@@ -3,13 +3,13 @@ package Virus;
 import simulation.RandomV;
 import population.Person;
 import population.Sick;
-import simulation.Simulation;
 
 import java.lang.Math;
 
 public class BritishVariant implements IVirus{
 //immutable, represent the British Variant of COVID
     public BritishVariant() {}//ctor
+    public int get_num_of_virus(){return num_of_virus;}
 
     private double getDeathProbability(int age){
         //returns death probability according to age

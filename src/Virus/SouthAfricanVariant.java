@@ -12,6 +12,7 @@ public class SouthAfricanVariant implements IVirus{
 //immutable, represent the South African Variant of COVID
 
     public SouthAfricanVariant() {}
+    public int get_num_of_virus(){return num_of_virus;}
 
     private double getDeathProbability(int age){
         //returns death probability according to age

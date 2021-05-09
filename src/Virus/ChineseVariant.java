@@ -15,6 +15,8 @@ public class ChineseVariant implements IVirus {
     public ChineseVariant() {
 
         }
+    public int get_num_of_virus(){return num_of_virus;}
+
     private double getDeathProb(int age) {
         //returns death probability according to age
         if(age <=18)

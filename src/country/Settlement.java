@@ -18,15 +18,15 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Settlement {
-    private ArrayList<Settlement> Related_settlements ;
     private String name;
-    private Location location;
-    private ArrayList<Person> people = new ArrayList<Person>();//all residents
+    private final Location location;
+    private ArrayList<Person> people = new ArrayList<>();//all residents
     private ArrayList<Person> not_sick_people = new ArrayList<Person>();//only healthy
     protected RamzorColor ramzorcolor;
     private ArrayList<Sick> sick_people= new ArrayList<Sick>();//only sick
     private int max_residents;
     private int vaccine_num=0;
+    private ArrayList<Settlement> Related_settlements ;
 
     //----------start of constructor---------
     public Settlement(String name, Location location,int max_residents,ArrayList<Settlement> Rel_settle) {
@@ -54,28 +54,20 @@ public class Settlement {
     public final ArrayList<Person> getPeople(){return this.people;}
     public final ArrayList<Person> get_not_sick_people() {return  this.not_sick_people;}
     public Sick getSickPerson(int index) { return sick_people.get(index); }//get sick in index
-    public final ArrayList<Sick> getSick_people(){return this.sick_people;}//get sick array
+    public final ArrayList<Sick> getSickPeople(){return this.sick_people;}//get sick array
     public int getResidentsNum(){ return this.people.size(); }
     public  int getSickNum(){return this.sick_people.size();}
     public int getHealthNum(){return this.not_sick_people.size();}
     public ArrayList<Settlement> getPassages(){return this.Related_settlements;}
     public String SettlementType(){return null;}
-    public int PopulationSize(){return this.people.size();}
+    public int getMaxResidents(){return this.max_residents;}
     //----------end of getters and setters---------
     public RamzorColor calculateRamzorGrade() {
         return RamzorColor.GREEN;
     }
 
     public double contagiousPercent() {
-        double num_of_sick = 0;
-        double sattel_size =(double) this.people.size();
-        for (int i = 0; i < sattel_size; i++) {
-            if (this.people.get(i) instanceof Sick)
-                num_of_sick++;
-
-        }
-
-        return num_of_sick / sattel_size;
+        return (double)this.getSickNum() / this.getResidentsNum();
     }
 
     public Point randomLocation() {
@@ -151,7 +143,7 @@ public class Settlement {
     }
 
     public boolean FullSettlement(){
-        if (this.people.size()<this.max_residents)
+        if (this.getResidentsNum()<this.getMaxResidents())
             return false;
         else
             return true;

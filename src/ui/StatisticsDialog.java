@@ -88,7 +88,9 @@ public class StatisticsDialog extends JDialog  {
                 Settlement settle = stats_table.getSettlementInRow();
                 Main.makeSick(settle, Main.sizeOfSick(settle.getResidentsNum()));
                 stats_table.Update(stats_table);
+                stats_table.setVisible(false);stats_table.setVisible(true);
                 mainwindow.UpdateMap(settle);
+
             }
         });
         StatisticsDialog dialog=this;
@@ -97,6 +99,8 @@ public class StatisticsDialog extends JDialog  {
             public void actionPerformed(ActionEvent e) {
 
                 new VccinateDialog(dialog,mapfile);
+
+                stats_table.setVisible(false);stats_table.setVisible(true);
 
 
             }

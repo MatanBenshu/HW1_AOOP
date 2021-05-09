@@ -31,6 +31,7 @@ public class VccinateDialog extends JDialog {
                 settlement.addVaccine_num(num);
                    main_dialog.getStats_table().Update(main_dialog.getStats_table());
                    dialog.setVisible(false);
+                   main_dialog.getStats_table().setVisible(false);main_dialog.getStats_table().setVisible(true);
 
             }
         });

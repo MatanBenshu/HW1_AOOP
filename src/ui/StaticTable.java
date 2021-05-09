@@ -130,7 +130,7 @@ public class StaticTable extends JTable {
                 System.out.println(row_index);
             }
         });
-        dialog.setVisible(true);
+
 
 
     }

@@ -152,7 +152,7 @@ public class Settlement {
     public void addPassage(Settlement settlement){Related_settlements.add(settlement);}
     public void giveVaccines(){
         //give vaccine to healthy people and vaccine num--
-        for(int i=0;i<not_sick_people.size();i++){
+        for(int i=0;i<not_sick_people.size()&&vaccine_num>0;i++){
             if(vaccine_num>0){
                 if(not_sick_people.get(i) instanceof Healthy){
                     Healthy healthy=(Healthy) not_sick_people.get(i);

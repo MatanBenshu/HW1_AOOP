@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class SimulationMenu extends JMenu {
     private MenuBar menuBar;
-   private boolean sim_play=false;
+
     private JMenuItem play=new JMenuItem("Play");
     private  JMenuItem pause=new JMenuItem("Pause");
     private JMenuItem stop=new JMenuItem("Stop");
@@ -25,11 +25,23 @@ public class SimulationMenu extends JMenu {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(menuBar.isUploaded_file()==true)
-                         Main.StartSim();
+                if(menuBar.isUploaded_file()==true) {
+                    try {
+                        Main.StartSim();
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+                }
             }
         });
-
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Main.play_sim==true){
+                    Main.play_sim=false;
+                }
+            }
+        });
 
         this.setVisible(true);
     }
@@ -47,10 +59,13 @@ public class SimulationMenu extends JMenu {
 
 
 
+    private class Play extends JMenuItem implements Runnable{
 
-    private class Play extends JMenuItem{
 
+        @Override
+        public void run() {
 
+        }
     }
     private class Pause extends JMenuItem{
 

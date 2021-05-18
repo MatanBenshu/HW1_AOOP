@@ -53,8 +53,11 @@ public  class RamzorMainWindow {
 
         public  void UpdateMap(Settlement settle) {
             map_panel.ColorUpdate(settle);
+           menu_bar.UpdateStatisticsDialog();
         }
+    public int getSliderValue(){return speed_slider.getValue();}
     }
+
 
 
 

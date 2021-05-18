@@ -89,10 +89,11 @@ public void OpenByPress(StatisticsDialog dialog){
                     Point clicked_point=  e.getPoint();
                      for (int i = 0; i <shapeArrayList.size() ; i++) {
                          if(shapeArrayList.get(i).contains(clicked_point)==true){
-                           Settlement sett=map.getSettlements()[i];
+                          // Settlement sett=map.getSettlements()[i];
                              dialog.getStats_table().setRowSelectionInterval(i,i);
+                             dialog.getStats_table().addRowSelectionInterval(i,i);
                              dialog.setVisible(true);
-
+                            break;
 
                          }
                      }

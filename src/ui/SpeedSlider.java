@@ -1,9 +1,12 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionListener;
 
 public class SpeedSlider extends JSlider {
+
     public  SpeedSlider(int min,int max){
         super(min,max);
         this.setPaintTicks(true);
@@ -13,10 +16,9 @@ public class SpeedSlider extends JSlider {
         this.setPaintLabels(true);
 
 
+
     }
 
-   int getSliderValue(){
-        return this.getValue();
-   }
+
 
 }

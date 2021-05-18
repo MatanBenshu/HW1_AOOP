@@ -23,6 +23,11 @@ public class MenuBar extends JMenuBar {
    private JMenuItem Load=new JMenuItem("Load");
    private JMenuItem statistics=new JMenuItem("Statistics");
    private StatisticsDialog statisticsDialog;
+
+    public void UpdateStatisticsDialog() {
+        statisticsDialog.Update();
+    }
+
     public MenuBar(RamzorMainWindow main_window){
         this.mainWindow=main_window;
         file = new JMenu("File");

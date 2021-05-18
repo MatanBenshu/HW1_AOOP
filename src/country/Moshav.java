@@ -4,7 +4,7 @@
 package country;
 
 import location.Location;
-import population.Person;
+import population.*;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,7 @@ package country;
 import simulation.RandomV;
 import location.Location;
 import location.Point;
-import population.Person;
+import population.*;
 import population.Healthy;
 import population.Vaccinated;
 import population.Convalescent;

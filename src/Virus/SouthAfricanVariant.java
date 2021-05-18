@@ -3,8 +3,8 @@
 
 package Virus;
 
-import simulation.RandomV;
 import population.Person;
+import simulation.RandomV;
 import population.Sick;
 import java.lang.Math;
 

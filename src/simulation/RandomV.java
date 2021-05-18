@@ -11,6 +11,7 @@ public abstract  class  RandomV {
       return ((Math.random() * (max - min)) + min);
      }
      public static int GetRand(int max){
+         //break
          return (new Random().nextInt(max));
      }
 

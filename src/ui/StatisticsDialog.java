@@ -31,8 +31,10 @@ public class StatisticsDialog extends JDialog  {
         this.mapfile=mapfile;
         this.setBounds(0,0,1000,600);
         this.north_panel.setLayout(new BoxLayout(north_panel,BoxLayout.LINE_AXIS));
-        this.north_panel.setPreferredSize(new Dimension(1000,30));
+        //this.north_panel.setPreferredSize(new Dimension(1000,30));
+        this.north_panel.setBounds(0,0,1000,30);
         this.text_filed.setPreferredSize(new Dimension(100,30));
+        //this.setResizable(false);
         this.stats_table =new StaticTable(new SettlementData(mapfile),this,text_filed);
     //end of setting center table
         text_filed.addActionListener(new ActionListener() {
@@ -45,13 +47,7 @@ public class StatisticsDialog extends JDialog  {
         col_select=new JComboBox<String>(stats_table.getColNames());
         col_select.setPreferredSize(new Dimension(500,30) );
 
-//        col_select.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int col_index=col_select.getSelectedIndex();
-//                stats_table.SortTableby(col_index);
-//            }
-//        });
+
         col_select.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

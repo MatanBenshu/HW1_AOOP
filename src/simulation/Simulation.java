@@ -21,5 +21,9 @@ public  class Simulation {
         public static void nextTick(){
             time++;
         }
+
+        public static long getTicks_per_day() {
+            return ticks_per_day;
+        }
     }
 }

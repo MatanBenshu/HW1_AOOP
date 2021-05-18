@@ -3,7 +3,6 @@ package ui;
 
 import IO.SimulationFile;
 import country.Map;
-import simulation.Main;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -17,7 +16,7 @@ public class MenuBar extends JMenuBar {
     private Map mapfile;
     private RamzorMainWindow mainWindow;
     private JMenu file;
-    private SimulationMenu simulation;
+    private SimulationMenu simulationMenu;
     private JMenu help;
     private JMenuItem edit_mutations;
    private JMenuItem Load=new JMenuItem("Load");
@@ -29,12 +28,12 @@ public class MenuBar extends JMenuBar {
     }
 
     public MenuBar(RamzorMainWindow main_window){
-        this.mainWindow=main_window;
+        this.mainWindow= main_window;
         file = new JMenu("File");
-        simulation = new SimulationMenu(this);
+        simulationMenu = new SimulationMenu(this.mainWindow,this);
         help = new JMenu("help");
         this.add(file);
-        this.add(simulation);
+        this.add(simulationMenu);
         this.add(help);
 
         Load.addActionListener(new ActionListener() {
@@ -43,6 +42,8 @@ public class MenuBar extends JMenuBar {
                 if(main_window.sim_is_stop == true){
 
                 JFileChooser fileChooser = new JFileChooser();
+
+
                int response = fileChooser.showOpenDialog(null);
                if(response == JFileChooser.APPROVE_OPTION) {
                    SimulationFile.file = fileChooser.getSelectedFile().getAbsolutePath();
@@ -59,12 +60,11 @@ public class MenuBar extends JMenuBar {
                    }
 
                 main_window.setMapPanel(new MapPanel(mapfile));
-                   Load.setEnabled(false);
-                    statistics.setEnabled(true);
+                   setLoadEnabled(false);
                     Uploaded_file=true;
                }
                Uploaded_file=true;
-               simulation.setPlayEnabled(true);
+               simulationMenu.setPlayEnabled(true);
                statisticsDialog= new StatisticsDialog(mapfile,main_window);
                 statisticsDialog.setVisible(false);
                }
@@ -175,7 +175,7 @@ public class MenuBar extends JMenuBar {
         });
 
     }
-    private static void editMutatations() {
+    private  void editMutatations() {
 
         JFrame f = new JFrame();
         String colum[] = {"British", "Chinese", "SouthAfrica"};
@@ -203,7 +203,18 @@ public class MenuBar extends JMenuBar {
 
     }
 
+    public void setLoadEnabled(boolean value){
+        if(value==true){
+            Load.setEnabled(true);
+            statistics.setEnabled(false);
+        }
+        else{
+            Load.setEnabled(false);
+            statistics.setEnabled(true);
 
+        }
+
+    }
     public boolean isUploaded_file() {
         return Uploaded_file;
     }

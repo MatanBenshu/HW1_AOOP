@@ -10,7 +10,7 @@ import location.Location;
 import location.Point;
 import location.Size;
 import population.Healthy;
-import population.Person;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;

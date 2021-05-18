@@ -42,6 +42,7 @@ public class Sick extends Person {
 
     public Person recover(){
         //return converting this person to convalescent person
+
         return new Convalescent(this.getAge(),this.getLocation(),this.getSettlement(),this.virus);
     }
 

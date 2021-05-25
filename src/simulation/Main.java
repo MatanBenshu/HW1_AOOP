@@ -18,20 +18,21 @@ public class Main {
     private static final int tryContagion=3;
     private static final double tryPass=0.03;
     private static  RamzorMainWindow window;
-    private static  Thread sim_thread;
     public static void main(String[] args) throws Exception {
      window= new RamzorMainWindow();
 
 
     }
     public static void StartSim() throws InterruptedException {
-         sim_thread=new Thread(new MainSim(),"Sim Thread");
-        play_sim =true;
-        sim_thread.start();
-        System.out.println("here");
+        ThreadArry threadArry=ThreadArry.getInstance();
+        threadArry.initialization();
+       threadArry.makeSimThreads(window);
+       threadArry.startThreads();
+        System.out.println("here");//never performed;
 
 
     }
+
 private static class MainSim implements Runnable{
 
 
@@ -42,11 +43,11 @@ private static class MainSim implements Runnable{
         //----------------Read from file-----------------------//
         Map y = window.getMapFile();
 
-        for (int i = 0; i < y.getSettlements().length; i++) {
-            makeSick(y.getSettlements()[i], sizeOfSick(y.getSettlements()[i].getResidentsNum()));
-        }
 
         while (play_sim == true) {
+            for (int i = 0; i < y.getSettlements().length; i++) {
+                makeSick(y.getSettlements()[i], sizeOfSick(y.getSettlements()[i].getResidentsNum()));
+            }
 
 //----------------Make random healthy people sick----------------//
             int settlements_size=y.getSettlements().length;
@@ -97,20 +98,19 @@ private static class MainSim implements Runnable{
                 window.UpdateMap(y.getSettlements()[i]);
                 System.out.println("update map,i="+i);
             }
+            Simulation.Clock.nextTick();
+            System.out.println(Simulation.Clock.now());
 //--------------------Thread sleep--------------//
             try {
                 Thread.sleep(1000*window.getSliderValue());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Simulation.Clock.nextTick();
-            System.out.println(Simulation.Clock.now());
+
         }
 
 
-        if(stop_is_on) {
-            sim_thread.stop();
-        }
+
         System.out.println("sim is stop");
     }
 
@@ -148,11 +148,11 @@ private static class MainSim implements Runnable{
         }
         }
 
-    public static int sizeOfSick(int ResidentsNum) {
+    private static int sizeOfSick(int ResidentsNum) {
         return (int) (ResidentsNum * Main.percent_of_sick);
     }
 
-    public static void makeSick(Settlement settlement, int size_of_sick) {
+    private static void makeSick(Settlement settlement, int size_of_sick) {
 
         for (int i = 0; i < size_of_sick;i++ ) {
             Person exists_per = randPerson( settlement.get_not_sick_people(),settlement.get_not_sick_people().size());
@@ -160,7 +160,7 @@ private static class MainSim implements Runnable{
         }
     }
 
-    public static Person randPerson(  ArrayList<Person> A_persons,int size){
+    private static Person randPerson(  ArrayList<Person> A_persons,int size){
         int i = RandomV.GetRand(size);
         return A_persons.get(i);
 

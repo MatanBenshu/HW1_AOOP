@@ -1,6 +1,7 @@
 package ui;
 
 import simulation.Main;
+import simulation.SimThread;
 import simulation.Simulation;
 
 import javax.swing.*;
@@ -30,13 +31,14 @@ public class SimulationMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(menuBar.isUploaded_file()==true) {
+                    Main.play_sim=true;
                     try {
                         Main.StartSim();
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
                     setPlayEnabled(false);
-                    Main.play_sim=true;
+
                     setStopEnabled(true);
                     Main.stop_is_on=false;
                     pause.setEnabled(true);
@@ -62,7 +64,9 @@ public class SimulationMenu extends JMenu {
                 pause.setEnabled(false);
                 setStopEnabled(false);
                 Main.stop_is_on=false;
+                Simulation.Clock.initialization();
                 frame.getMenu_bar().setLoadEnabled(true);
+
 
 
             }

@@ -178,6 +178,19 @@ public class Settlement {
             return true;
         return false;
     }
+    public void tryTokillSicks(){
+        ArrayList<Sick> deads=new ArrayList<>();
+        for (int i = 0; i <sick_people.size() ; i++) {
+            Sick s_person=this.sick_people.get(i);
+            if(s_person.tryToDie()==true){
+
+                deads.add(s_person);
+            }
+        }
+
+
+
+    }
 
     public void setName(String aValue) {
         this.name=aValue;

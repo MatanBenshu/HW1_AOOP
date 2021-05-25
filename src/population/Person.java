@@ -3,7 +3,10 @@
 
 package population;
 
-import Virus.*;
+import Virus.BritishVariant;
+import Virus.ChineseVariant;
+import Virus.IVirus;
+import Virus.SouthAfricanVariant;
 import country.Settlement;
 import location.Point;
 import simulation.RandomV;

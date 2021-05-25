@@ -19,6 +19,7 @@ import country.Map;
 
 public class SimulationFile {
     //immutable, for converting file to map
+
     public static  String file ="C:\\Users\\מתן בן שושן\\Documents\\A-input.txt";
     public static boolean simulation_run=false;
     private final double MAX_RESIDENDS=1.3;

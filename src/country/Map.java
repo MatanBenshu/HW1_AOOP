@@ -3,7 +3,16 @@
 
 package country;
 
+import simulation.SimThread;
+import simulation.Simulation;
+import simulation.ThreadArry;
+import ui.RamzorMainWindow;
+
+import java.util.concurrent.CyclicBarrier;
+
 public class Map {
+    static private CyclicBarrier cyclicBarrier;
+    static private ThreadArry threads=ThreadArry.getInstance();
     private Settlement[] settlements;
 
     public Map(Settlement[] settlements) {
@@ -25,5 +34,35 @@ public class Map {
         }
         return names;
 
+    }
+
+    public void StartThreads(){
+
+        for (int i = 0; i <settlements.length ; i++) {
+            new Thread(settlements[i],settlements[i].getName()).start();
+
+        }
+        cyclicBarrier=new CyclicBarrier(settlements.length, new Runnable() {
+            @Override
+            public void run() {
+                Simulation.Clock.nextTick();
+                System.out.println(Simulation.Clock.now()+"barrier");
+                RamzorMainWindow.UpdateMap();
+                System.out.println("update map->" );
+                try {
+                    Thread.sleep(1000* RamzorMainWindow.getSliderValue());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+
+
+
+    public static CyclicBarrier getCyclicBarrier() {
+        return cyclicBarrier;
     }
 }

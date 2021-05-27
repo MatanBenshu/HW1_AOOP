@@ -4,7 +4,6 @@ import IO.StatisticsFile;
 import country.Map;
 import country.Settlement;
 import country.SettlementData;
-import simulation.Main;
 import simulation.SimThread;
 
 import javax.swing.*;
@@ -84,7 +83,7 @@ public class StatisticsDialog extends JDialog  {
 
                 Settlement settle = stats_table.getSettlementInRow();
                 SimThread.makeSick(settle, SimThread.sizeOfSick(settle.getResidentsNum()));
-                stats_table.Update(stats_table);
+                stats_table.Update();
                 stats_table.setVisible(false);stats_table.setVisible(true);
                 mainwindow.UpdateMap(settle);
 

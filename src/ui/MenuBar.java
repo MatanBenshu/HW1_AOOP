@@ -1,6 +1,7 @@
 package ui;
 
 
+import IO.LogFile;
 import IO.SimulationFile;
 import country.Map;
 
@@ -9,18 +10,21 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MenuBar extends JMenuBar {
     private boolean Uploaded_file=false;
-    private Map mapfile;
-    private RamzorMainWindow mainWindow;
+     private Map mapfile;
+    private RamzorMainWindow ramzorMainWindow;
     private JMenu file;
     private SimulationMenu simulationMenu;
     private JMenu help;
     private JMenuItem edit_mutations;
    private JMenuItem Load=new JMenuItem("Load");
    private JMenuItem statistics=new JMenuItem("Statistics");
+   private JMenuItem log_file_path=new JMenuItem("Log File Path");
    private StatisticsDialog statisticsDialog;
 
     public void UpdateStatisticsDialog() {
@@ -28,9 +32,9 @@ public class MenuBar extends JMenuBar {
     }
 
     public MenuBar(RamzorMainWindow main_window){
-        this.mainWindow= main_window;
+        this.ramzorMainWindow = main_window;
         file = new JMenu("File");
-        simulationMenu = new SimulationMenu(this.mainWindow,this);
+        simulationMenu = new SimulationMenu(this.ramzorMainWindow,this);
         help = new JMenu("help");
         this.add(file);
         this.add(simulationMenu);
@@ -39,7 +43,7 @@ public class MenuBar extends JMenuBar {
         Load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(main_window.sim_is_stop == true){
+                if(SimulationMenu.stop_is_on == true){
 
                 JFileChooser fileChooser = new JFileChooser();
 
@@ -54,6 +58,7 @@ public class MenuBar extends JMenuBar {
                        exception.printStackTrace();
                    }
                    try {
+                       SimulationMenu.stop_is_on=false;
                        mapfile = file.loadMap();
                    } catch (Exception exception) {
                        exception.printStackTrace();
@@ -62,15 +67,18 @@ public class MenuBar extends JMenuBar {
                 main_window.setMapPanel(new MapPanel(mapfile));
                    setLoadEnabled(false);
                     Uploaded_file=true;
+                   Uploaded_file=true;
+                   simulationMenu.setPlayEnabled(true);
+                   statisticsDialog= new StatisticsDialog(mapfile,main_window);
+                   statisticsDialog.setVisible(false);
                }
-               Uploaded_file=true;
-               simulationMenu.setPlayEnabled(true);
-               statisticsDialog= new StatisticsDialog(mapfile,main_window);
-                statisticsDialog.setVisible(false);
+
+
                }
                 else{
                     //show error messege
                 }
+
             }
         });
 
@@ -102,42 +110,28 @@ public class MenuBar extends JMenuBar {
                System.exit(0);
            }
        });
+        log_file_path.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser savefile =new JFileChooser();
+                savefile.showSaveDialog(null);
+                try {
+                    LogFile.Save(savefile.getSelectedFile());
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
+
+            }
+        });
         file.add(Load);
         file.add(statistics);
         file.add(edit_mutations);
+        file.add(log_file_path);
         file.add(exit);
-//        JMenuItem play_item=new JMenuItem("Play");
-//        play_item.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if(main_window.sim_is_stop ==true && mainWindow.sim_is_pause==true){
-//                    main_window.sim_is_stop = false;
-//                    main_window.sim_is_pause = false;
-//                    //start sim here
-//
-//
-//
-//                }
-//            }
-//        });
-//        simulation.add(play_item);
-//        JMenuItem pause_item=new JMenuItem("Pause");
-//        pause_item.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if(main_window.sim_is_pause == false)
-//                {
-//                //puse sim here
-//
-//                }
-//                else
-//                {
-//                    //error massage
-//                }
-//            }
-//        });
-//        simulation.add(pause_item);
+
         JMenuItem help_item=new JMenuItem("Help");
 
         help.add(help_item);
@@ -219,7 +213,7 @@ public class MenuBar extends JMenuBar {
         return Uploaded_file;
     }
 
-    public Map getMapfile() {
+    public  Map getMapfile() {
         return mapfile;
     }
 

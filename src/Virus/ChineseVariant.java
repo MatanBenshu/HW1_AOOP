@@ -56,6 +56,8 @@ public class ChineseVariant implements IVirus {
         return false;
     }
 
+
+
     @Override
     public boolean tryToKill(Sick s) {
         //calculate the probability that s(sick) will die

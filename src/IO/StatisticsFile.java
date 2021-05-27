@@ -10,7 +10,6 @@ public class StatisticsFile {
     public static void CSV(Map origMap,File file) {
 
         String s=file.getParent()+"\\"+file.getName()+".csv";
-        File f=new File(s);
         try (PrintWriter writer = new PrintWriter(s)) {
             StringBuilder sb = new StringBuilder();
             sb.append("City/Kibbutz/Moshav");

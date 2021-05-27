@@ -3,6 +3,8 @@
 
 package simulation;
 
+import java.util.Map;
+
 public  class Simulation {
     public static class Clock{
         private static long time=0;
@@ -16,7 +18,7 @@ public  class Simulation {
         }
         public static long DaysPast(long start_time){
             long time_past=time-start_time;
-            return (time_past/ticks_per_day)+1;
+            return (long) Math.ceil(time_past/ticks_per_day);
         }
         public static void nextTick(){
             time++;

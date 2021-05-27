@@ -1,10 +1,8 @@
 package simulation;
 
 import country.Settlement;
-import ui.RamzorMainWindow;
 
 import java.util.ArrayList;
-import java.util.concurrent.CyclicBarrier;
 
 public class ThreadArry extends ArrayList<Thread> {
     static private ThreadArry Instance=null;
@@ -24,10 +22,10 @@ public class ThreadArry extends ArrayList<Thread> {
         }
         }
     }
-     public void makeSimThreads(RamzorMainWindow window){
-        Settlement[]  settlements=window.getMenu_bar().getMapfile().getSettlements();
+     public void makeSimThreads(Settlement[] settlements){
+
         for (int i = 0; i <settlements.length ; i++) {
-            this.add(new Thread(new SimThread(settlements[i],window,settlements[i].getName())));
+            this.add(new Thread(new SimThread(settlements[i])));
         }
          SimThread.setCyclicBarrier(this.size());
          has_threads=true;

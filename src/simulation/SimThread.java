@@ -13,112 +13,126 @@ import java.util.concurrent.CyclicBarrier;
 
 public class SimThread implements Runnable {
     private static CyclicBarrier cyclicBarrier;
-    private static int thread_num=0;
+    public static boolean stop_is_on = false;
+    public static boolean play_flag = false;
+    private static int thread_num = 0;
     private Settlement settlement;
-    private RamzorMainWindow window;
-    public static boolean stop_is_on=false;
-    public static boolean play_sim =false;
-    private static final double percent_of_sick =0.01;
-    private  final int tryContagion=3;
-    private  final double tryPass=0.03;
-    private final String thread_name;
-    private final SimThread ref;
-    public SimThread(Settlement value, RamzorMainWindow window,String name)
-    {
-        super();
-        this.settlement=value;
-        this.window=window;
+    private static final double percent_of_sick = 0.01;
+    private final int tryContagion = 3;
+    private final double tryPass = 0.03;
 
-        thread_name=name;
-        this.ref=this;
+    private final SimThread ref;
+
+    public SimThread(Settlement value) {
+
+        this.settlement = value;
+
+        this.ref = this;
     }
 
     @Override
     public void run() {
 
-        while (Main.play_sim == true) {
+        while (stop_is_on == false) {
 
+            while (play_flag == false) {
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            this.notify();
 //----------------Make random healthy people sick----------------//
             this.makeSick(settlement, sizeOfSick(settlement.getResidentsNum()));
 //----------------------Try to contagion-------------------------------//
 
-               this.tryCon(settlement);
-                System.out.println("Try to contagion ->"+settlement.getName());
+            this.tryCon(settlement);
+            System.out.println("Try to contagion ->" + settlement.getName());
 
 
 //-----------------------After 25 days sick is convalescent---------//
-                Settlement currentSettlement = settlement;
-                System.out.println("After 25 days sick is convalescent->"+settlement.getName());
-                for (int p = 0; p < currentSettlement.getSickNum(); p++) {
-                    Sick s = currentSettlement.getSickPerson(p);
-                    if (s.DaysPastFromCont() >= 25) {//need to return sick not Person{
-                        Convalescent c = (Convalescent) s.recover();
-                        currentSettlement.Update_person_status(s, c);
-                        System.out.println("After 25 days sick is convalescent ,end if");
-                    }
-                    System.out.println("After 25 days sick is convalescent ,p="+p);
+            Settlement currentSettlement = settlement;
+            System.out.println("After 25 days sick is convalescent->" + settlement.getName());
+            int sick_num;
+            sick_num = currentSettlement.getSickNum();
+            for (int p = 0; p < sick_num; p++) {
+                Sick s = currentSettlement.getSickPerson(p);
+                if (s.DaysPastFromCont() >= 25) {//need to return sick not Person{
+                    Convalescent c = (Convalescent) s.recover();
+                    currentSettlement.Update_person_status(s, c);
+                    System.out.println("After 25 days sick is convalescent ,end if");
                 }
+                System.out.println("After 25 days sick is convalescent ,p=" + p);
+            }
 
             //---------------------Try to pass---------------------//
 
+            synchronized (this) {
+                int numOfPasses = (int) (currentSettlement.getResidentsNum() * tryPass);
+                if (currentSettlement.getPassages().size() != 0) {
+                    for (int j = 0; j < numOfPasses; j++) {
+                        Person p = this.randPerson(currentSettlement.getPeople(), currentSettlement.getPeople().size());
+                        Settlement passTo = currentSettlement.getPassages().get(RandomV.GetRand(currentSettlement.getPassages().size()));
 
-            int numOfPasses = (int) (currentSettlement.getResidentsNum() * tryPass);
-            if (currentSettlement.getPassages().size() != 0) {
-                for (int j = 0; j < numOfPasses; j++) {
-                    Person p = this.randPerson(currentSettlement.getPeople(),currentSettlement.getPeople().size());
-                    Settlement passTo = currentSettlement.getPassages().get(RandomV.GetRand(currentSettlement.getPassages().size()));
+                        boolean passed = currentSettlement.transferPerson(p, passTo);
 
-                    boolean passed = currentSettlement.transferPerson(p, passTo);
-
-                    System.out.println("ATry to pass,j="+j);
-                    //System.out.print("Person " + p + "transfer to: " + passTo.getName() + "status= " + passed);
+                        System.out.println("ATry to pass,j=" + j);
+                        //System.out.print("Person " + p + "transfer to: " + passTo.getName() + "status= " + passed);
+                    }
+                    System.out.println("ATry to pass,if");
                 }
-                System.out.println("ATry to pass,if");
+                System.out.println("ATry to pass->" + settlement.getName());
             }
-            System.out.println("ATry to pass->"+settlement.getName());
-
 
             //------------------Vaccine shot----------------------//
             settlement.giveVaccines();
-            System.out.println("Vaccine shot->"+settlement.getName());
+            System.out.println("Vaccine shot->" + settlement.getName());
 
 
 //-----------------update map-----------------------//
 
-            window.UpdateMap(settlement);
-            System.out.println("update map->"+settlement.getName());
+
             //--------------------berrier----------------
-                try {
-
-                    cyclicBarrier.await();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();
-                }
-
-
-
-
-//--------------------Thread sleep--------------//
             try {
-                Thread.sleep(1000*window.getSliderValue());
+
+                cyclicBarrier.await();
+
             } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (BrokenBarrierException e) {
                 e.printStackTrace();
             }
 
 
+//--------------------Thread sleep--------------//
+
         }
 
-
-        System.out.println("sim is stop");
     }
 
 
 
-    public static void setCyclicBarrier(int thread_num) {
-        cyclicBarrier = new CyclicBarrier(thread_num, new NextTick());
+
+        public static void setCyclicBarrier(int thread_num) {
+
+        cyclicBarrier = new CyclicBarrier(thread_num, new Runnable() {
+            @Override
+            public void run() {
+                Simulation.Clock.nextTick();
+                System.out.println(Simulation.Clock.now()+"barrier");
+                RamzorMainWindow.UpdateMap();
+                System.out.println("update map->");
+                try {
+                    Thread.sleep(1000* RamzorMainWindow.getSliderValue());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
     private void tryCon(Settlement settlement){
@@ -175,11 +189,14 @@ public class SimThread implements Runnable {
 
         @Override
         public void run() {
-            Simulation.Clock.nextTick();
-            System.out.println(Simulation.Clock.now());
+
+
+
+        }
+
         }
     }
-}
+
 
 
 

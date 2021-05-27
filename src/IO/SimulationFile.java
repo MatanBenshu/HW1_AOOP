@@ -150,8 +150,11 @@ public class SimulationFile {
     public Map loadMap() throws Exception {
         //converting file to Map
         Map mp = new Map(readFile(file));
+       mp.StartThreads();
+
         return mp;
     }
+
 
 
 

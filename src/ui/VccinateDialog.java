@@ -19,7 +19,7 @@ public class VccinateDialog extends JDialog {
         this.setResizable(false);
         this.pack();
         this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.LINE_AXIS));
-        JDialog dialog=this;
+        JDialog vccinateDialogdialog=this;
         add_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -29,8 +29,8 @@ public class VccinateDialog extends JDialog {
                    Settlement settlement;
                 settlement = main_dialog.getStats_table().getSettlementInRow();
                 settlement.addVaccine_num(num);
-                   main_dialog.getStats_table().Update(main_dialog.getStats_table());
-                   dialog.setVisible(false);
+                   main_dialog.getStats_table().Update();
+                   vccinateDialogdialog.setVisible(false);
                    main_dialog.getStats_table().setVisible(false);main_dialog.getStats_table().setVisible(true);
 
             }

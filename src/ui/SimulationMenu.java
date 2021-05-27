@@ -1,5 +1,7 @@
 package ui;
 
+import country.Map;
+import country.Settlement;
 import simulation.Main;
 import simulation.SimThread;
 import simulation.Simulation;
@@ -11,7 +13,8 @@ import java.awt.event.ActionListener;
 
 public class SimulationMenu extends JMenu {
     private MenuBar menuBar;
-
+    public static boolean stop_is_on = true;
+    public static boolean play_flag = false;
     private JMenuItem play=new JMenuItem("Play");
     private  JMenuItem pause=new JMenuItem("Pause");
     private JMenuItem stop=new JMenuItem("Stop");
@@ -31,25 +34,21 @@ public class SimulationMenu extends JMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(menuBar.isUploaded_file()==true) {
-                    Main.play_sim=true;
-                    try {
-                        Main.StartSim();
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
-                    setPlayEnabled(false);
 
+                 play_flag =true;
+                   synchronized (Map.class){Map.class.notifyAll();}
+                 setPlayEnabled(false);
                     setStopEnabled(true);
-                    Main.stop_is_on=false;
                     pause.setEnabled(true);
+
                 }
             }
         });
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.play_sim==true){
-                    Main.play_sim=false;//stop  sim
+                if(play_flag==true){
+                    play_flag =false;//stop  sim
                     setPlayEnabled(true);
                     pause.setEnabled(false);
                 }
@@ -60,10 +59,10 @@ public class SimulationMenu extends JMenu {
             public void actionPerformed(ActionEvent e) {
                 //stop  sim
                 play.setEnabled(false);
-                Main.play_sim=false;
+                play_flag =false;
                 pause.setEnabled(false);
                 setStopEnabled(false);
-                Main.stop_is_on=false;
+                stop_is_on=true;
                 Simulation.Clock.initialization();
                 frame.getMenu_bar().setLoadEnabled(true);
 
@@ -92,12 +91,12 @@ public class SimulationMenu extends JMenu {
     private class SetTicksPerDay extends JDialog{
     private JSpinner spinner;
     private JButton set_button;
-    final long  def_ticks_per_day=Simulation.Clock.getTicks_per_day();
+    final long  def_ticks_per_day=1;
 
 
         SetTicksPerDay(RamzorMainWindow main_frame){
             super(main_frame,"Set Ticks Per Day",true);
-            this.spinner=new JSpinner(new SpinnerNumberModel(this.def_ticks_per_day,this.def_ticks_per_day,1000,1) );
+            this.spinner=new JSpinner(new SpinnerNumberModel(Simulation.Clock.getTicks_per_day(),this.def_ticks_per_day,1000,1) );
             this.set_button=new JButton("Set");
             this.set_button.setPreferredSize(new Dimension(50,50));
             SetTicksPerDay tick_dialog=this;

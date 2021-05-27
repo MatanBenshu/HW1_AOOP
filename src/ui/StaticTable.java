@@ -13,11 +13,13 @@ public class StaticTable extends JTable {
 
     private static class SettelementModel extends AbstractTableModel {
         private SettlementData data;
-        private final String[] columnNames = {"index", "Name","Settlement Type", "Ramzor","present of Sick","Vaccinate given","population size"};
+        private final String[] columnNames = {"Index", "Name","Settlement Type", "Ramzor","Present Of Sick","Vaccinate Given","Population Size","Max Residents ","Dead"};
 
         public SettelementModel(SettlementData data) {
             this.data = data;
+
         }
+
 
 
         @Override
@@ -43,13 +45,15 @@ public class StaticTable extends JTable {
                 case 3:
                     return settlement.calculateRamzorGrade().getColorName();
                 case 4:
-                    return settlement.contagiousPercent();
+                    return String.format("%.3f",settlement.contagiousPercent()*100) + "%";
                 case 5:
                     return settlement.getVaccineNum();
                 case 6:
                     return settlement.PopulationSize();
                 case 7:
-                    return settlement.getResidentsNum();
+                    return settlement.getMaxResidents();
+                case 8:
+                    return settlement.getDeadNum();
             }
             return null;
         }
@@ -83,8 +87,9 @@ public class StaticTable extends JTable {
         public String[] getColumnNames() {
             return columnNames;
         }
+
     }
-    private int row_index;
+    private static int row_index;
     private StatisticsDialog dialog;
     private TableRowSorter<SettelementModel> sorter;
     private JTextField tbFilterText;
@@ -147,16 +152,14 @@ public class StaticTable extends JTable {
         return  settlementData.at(row_index);
     }
 
-    public void Update(StaticTable ref){ref= new StaticTable(settlementData,dialog,tbFilterText);}
+    public void Update(){model.fireTableDataChanged();this.repaint();
+    }
     public String[]  getColNames(){return model.getColumnNames();}
     public void SortTableby(int col_index){
         this.sorter.toggleSortOrder(col_index);
-        this.Update(this);
+        this.Update();
 
     }
 
-    private  enum ColToFilter{
 
-
-    }
 }

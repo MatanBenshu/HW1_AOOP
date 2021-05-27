@@ -42,7 +42,7 @@ public class MapPanel extends JPanel  {
                         x_sett=sett.getLocation().getPosition().getX();
                         y_rel=rel.getLocation().getPosition().getY();
                         y_sett=sett.getLocation().getPosition().getY();
-                        g.drawLine(x_rel,y_rel,x_sett,y_sett);
+                        g.drawLine(x_rel+rel.getSize().getWidth()/2,y_rel+rel.getSize().getHeight()/2,x_sett+sett.getSize().getWidth()/2,y_sett+sett.getSize().getHeight()/2);
 
                     }
                 }

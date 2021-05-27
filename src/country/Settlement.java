@@ -261,21 +261,21 @@ public class Settlement implements Runnable {
 //----------------------Try to contagion-------------------------------//
 
             this.tryCon(this);
-            System.out.println("Try to contagion ->" + this.getName());
+
 
 
 //-----------------------After 25 days sick is convalescent---------//
 
-            System.out.println("After 25 days sick is convalescent->" + this.getName());
+
             int sick_num;
             for (int p = 0; p < this.getSickNum(); p++) {
                 Sick s = this.getSickPerson(p);
                 if (s!=null&&s.DaysPastFromCont() >= 25) {//need to return sick not Person{
                     Convalescent c = (Convalescent) s.recover();
                     this.Update_person_status(s, c);
-                    System.out.println("After 25 days sick is convalescent ,end if");
+
                 }
-                System.out.println("After 25 days sick is convalescent ,p=" + p);
+
             }
 
             //---------------------Try to pass---------------------//
@@ -289,24 +289,24 @@ public class Settlement implements Runnable {
 
                             boolean passed = this.transferPerson(p, passTo);
 
-                        System.out.println("ATry to pass,j=" + j);
+
                         //System.out.print("Person " + p + "transfer to: " + passTo.getName() + "status= " + passed);
                     }
-                    System.out.println("ATry to pass,if");
+
                 }
-                System.out.println("ATry to pass->" + this.getName());
+
 
 
             //------------------Vaccine shot----------------------//
             this.giveVaccines();
-            System.out.println("Vaccine shot->" + this.getName());
+
 
             try {
                 this.tryTokillSicks();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("tryTokillSicks()->" + this.getName());
+
 //-----------------update map-----------------------//
 
 

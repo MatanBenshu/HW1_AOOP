@@ -1,3 +1,6 @@
+
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 package ui;
 
 import country.Map;
@@ -10,18 +13,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ *All the implementations required for the button simulation in menu bar
+ *
+ */
 public class SimulationMenu extends JMenu {
-    private MenuBar menuBar;
+
+
     public static boolean stop_is_on = true;
     public static boolean play_flag = false;
     private JMenuItem play=new JMenuItem("Play");
     private  JMenuItem pause=new JMenuItem("Pause");
     private JMenuItem stop=new JMenuItem("Stop");
     private JMenuItem set_tick_per_day=new JMenuItem("Set Ticks Per Day");
-    public SimulationMenu(RamzorMainWindow frame,MenuBar menuBar){
+    public SimulationMenu(RamzorMainWindow frame){
+        /**
+         *
+         * @param frame-main frame ref
+         */
         super("Simulation");
-        this.menuBar=menuBar;
         this.setPlayEnabled(false);
        this.setStopEnabled(false);
        this.pause.setEnabled(false);
@@ -33,7 +43,7 @@ public class SimulationMenu extends JMenu {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(menuBar.isUploaded_file()==true) {
+                if(frame.getMenu_bar().isUploaded_file()==true) {
 
                  play_flag =true;
                    synchronized (Map.class){Map.class.notifyAll();}
@@ -73,7 +83,6 @@ public class SimulationMenu extends JMenu {
         set_tick_per_day.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JDialog Ticks_dialog= new JDialog(frame,"Set Ticks Per Day",true);
                 SetTicksPerDay dialog=new SetTicksPerDay(frame);
             }
         });
@@ -89,6 +98,10 @@ public class SimulationMenu extends JMenu {
     }
 
     private class SetTicksPerDay extends JDialog{
+        /**
+         * This class is used to create a tic definition window for the day
+         *
+         */
     private JSpinner spinner;
     private JButton set_button;
     final long  def_ticks_per_day=1;
@@ -105,7 +118,6 @@ public class SimulationMenu extends JMenu {
                 public void actionPerformed(ActionEvent e) {
                     SpinnerNumberModel sp_modal=(SpinnerNumberModel) spinner.getModel();
                     Simulation.Clock.setTicks_per_day(sp_modal.getNumber().longValue());
-                    System.out.println("tics "+Simulation.Clock.getTicks_per_day());
                     tick_dialog.setVisible(false);
                 }
             });

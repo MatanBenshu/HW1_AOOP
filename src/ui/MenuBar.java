@@ -1,3 +1,5 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 package ui;
 
 
@@ -34,7 +36,7 @@ public class MenuBar extends JMenuBar {
     public MenuBar(RamzorMainWindow main_window){
         this.ramzorMainWindow = main_window;
         file = new JMenu("File");
-        simulationMenu = new SimulationMenu(this.ramzorMainWindow,this);
+        simulationMenu = new SimulationMenu(this.ramzorMainWindow);
         help = new JMenu("help");
         this.add(file);
         this.add(simulationMenu);
@@ -164,7 +166,11 @@ public class MenuBar extends JMenuBar {
                 JDialog about_dialog = new JDialog(main_window.getWindowAddres(), "About",false);
                 about_dialog.setBounds(0,0,500,500);
                 JTextArea text = new JTextArea();
-                text.setText("this program ");
+                text.setText("This software was written by : Aviya David and Matan Ben Shushan.\n" +
+                        "Copyright on the feature is reserved to them and only to them, whoever dares to infringe the rights risks ");
+                text.setLineWrap(true);
+                about_dialog.add(text);
+                about_dialog.setVisible(true);
             }
         });
 

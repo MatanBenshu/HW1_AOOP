@@ -1,3 +1,5 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 package ui;
 import country.Map;
 import country.Settlement;
@@ -15,10 +17,6 @@ public  class RamzorMainWindow extends JFrame {
 
 
 public RamzorMainWindow() {
-
-
-
-
         menu_bar = new MenuBar(this);
         setTitle("Main Window");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,10 +36,15 @@ public RamzorMainWindow() {
     }
 
     public void setMapPanel (MapPanel map){
+        /**
+         * Upload a new map after uploading a file
+         * @param map-new map panel ;
+         *
+         */
         this.map_panel.setVisible(false);
         this.remove(map_panel);
         this.add(map, BorderLayout.CENTER);
-        map_panel = map;
+        map_panel = map;//save new map reference
         map_panel.setVisible(true);
 
     }
@@ -55,6 +58,12 @@ public RamzorMainWindow() {
     }
 
     public static void UpdateMap () {
+        /**
+         * Update the whole map
+         * @param none
+         *
+         */
+
         Settlement[] settlements =menu_bar.getMapfile().getSettlements();
         for (int i = 0; i < settlements.length; i++) {
 
@@ -65,6 +74,11 @@ public RamzorMainWindow() {
     }
 
     public static void UpdateMap (Settlement settle){
+        /**
+         * A specific settlement map update
+         * @param settle-the settlement to update
+         *
+         */
         map_panel.ColorUpdate(settle);
         menu_bar.UpdateStatisticsDialog();
 }

@@ -1,3 +1,7 @@
+
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
 package IO;
 
 import country.Settlement;
@@ -8,8 +12,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
+
+/**
+ *Implementation of writing to a log file
+ * this class implements 2 methods-
+ * 1)Save
+ * 2)write
+ *
+ */
 
 public class LogFile {
    static private PrintWriter printWriter=null;
@@ -33,15 +43,16 @@ public class LogFile {
 
     }
     public  synchronized static void Write(Settlement settlement) throws IOException {
-        System.out.println("write");
+        /**
+         * write log date to log file
+         * @param settlement-the settlement required to write.
+         */
       printWriter.println("-----------------------");
        printWriter.println("Date and Time: "+dateFormat.format(date));
      printWriter.println("settlement: "+settlement.getName());
         printWriter.println("Sick People: "+settlement.getSickNum());
         printWriter.println("dead: "+settlement.getDeadNum());
         printWriter.println("-----------------------");
-
-
     }
 
     }

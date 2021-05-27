@@ -1,7 +1,11 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
+
+
 package IO;
 import country.*;
 
-import java.awt.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

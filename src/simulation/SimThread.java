@@ -1,3 +1,5 @@
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 package simulation;
 
 import country.Settlement;
@@ -9,7 +11,6 @@ import ui.RamzorMainWindow;
 import java.util.ArrayList;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
-
 
 public class SimThread implements Runnable {
     private static CyclicBarrier cyclicBarrier;

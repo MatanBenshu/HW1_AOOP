@@ -1,3 +1,6 @@
+
+//Matan Ben-Shushsan 205639800
+//Aviya David 209203991
 package ui;
 
 import IO.StatisticsFile;
@@ -10,6 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ *
+ */
+
 
 public class StatisticsDialog extends JDialog  {
     private  Map mapfile;
